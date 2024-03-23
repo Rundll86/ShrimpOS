@@ -192,6 +192,7 @@ const PluginList = {
         if (!ID) {
             throw new Error("Cannot register plugin.");
         };
+        if (Object.keys(this.__content__).includes(ID)) { this.Remove(ID); };
         this.__content__[ID] = [Name, Version, Author, Description];
     },
     Read(ID) {
