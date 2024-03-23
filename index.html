@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/font-awesome.css">
+</head>
+
+<body>
+    <div id="content">
+        <div id="infobar">
+            <span id="logo">Shrimp OS</span><br>
+            <span id="loadingtext">- 正在连接终端 -</span>
+        </div>
+        <div id="controlbar">
+            <div class="panel">
+                <span class="title">「开始」</span><br>
+                <hr><br>
+                <img class="avatarimg" id="avatarimg"><br>
+                <span id="timetogood"></span>好，<span id="username"></span>！<br>
+                <hr><br>
+                <div style="text-align: center;">
+                    <span class="fa fa-power-off"></span>电源控制 [
+                    <button class="small hoverPlus" onclick="shutdown()">关机</button>
+                    <button class="small hoverPlus" onclick="restart()">重启</button>
+                    ]<br>
+                    <span style="margin-top: 20px;font-weight: bold;">快速启动</span><br>
+                    <button class="small hoverButBlock quickStart" onclick="runProgram('qq')">
+                        <span class="fa fa-qq"></span>QQ
+                    </button>
+                    <button class="small hoverButBlock quickStart" onclick="runProgram('vscode')">
+                        <span class="fa fa-gg-circle"></span>Code
+                    </button><br>
+                    <button class="small hoverButBlock quickStart" onclick="runProgram('explorer')">
+                        <span class="fa fa-file-text"></span>文件管理
+                    </button>
+                    <button class="small hoverButBlock quickStart" onclick="runProgram('edge')">
+                        <span class="fa fa-edge"></span>Edge
+                    </button><br>
+                    <button class="small linkbtn" onclick="window.location.reload()">刷新底层缓存</button>
+                </div>
+            </div>
+            <div class="panel" style="width: 20vw;">
+                <span class="title">Shrimp AI</span><br>
+                <span style="font-size: 13px;">ChatNio账户点数剩余：</span><span id="quotanum">[ Loading ]</span><br>
+                <hr><br>
+                <div id="msgc"></div>
+                <span>
+                    &gt; <input id="aiaskinput">
+                </span>
+            </div>
+            <div class="panel">
+                <span class="title">应用列表</span><br>
+                <hr><br>
+                <div id="proglist"></div>
+            </div>
+        </div>
+    </div>
+    <canvas id="starStage"></canvas>
+    <script src="./js/build/main.js"></script>
+</body>
+
+</html>

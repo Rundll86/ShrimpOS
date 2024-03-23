@@ -1,0 +1,6 @@
+:root {
+    --LineColor: rgba(45, 164, 186, 70%);
+    --Border: 2px var(--LineColor) solid;
+    --Background-Color: rgba(10, 96, 109, 70%);
+    --Border-Radius: 10px;
+}

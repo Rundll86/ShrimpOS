@@ -1,0 +1,26 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chatnio": "^1.1.8",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "css-loader": "^6.10.0",
+    "dts-gen": "^0.10.1",
+    "highlight": "^0.2.4",
+    "highlight.js": "^11.9.0",
+    "jquery": "^3.7.1",
+    "jquery-easing": "^0.0.1",
+    "markdown-it": "^14.0.0",
+    "marked": "^12.0.1",
+    "style-loader": "^3.3.4"
+  }
+}

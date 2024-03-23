@@ -1,0 +1,380 @@
+@import url(./Color.css);
+
+@font-face {
+    font-family: "SYHT";
+    src: url(../fonts/SYHT.ttf);
+}
+
+:root {
+    --anitime: .3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    text-align: center;
+    color: white;
+    font-family: "SYHT";
+    font-size: 16px;
+    position: relative;
+    transition: all var(--anitime) ease-in-out;
+}
+
+body {
+    background-color: #07081c;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    width: 100vw;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+span {
+    display: inline-block;
+}
+
+#starStage {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: transparent;
+    z-index: -1;
+}
+
+#logo {
+    font-size: 5vw;
+    font-weight: bold;
+    animation: jump var(--anitime) ease-in-out;
+}
+
+#loadingtext {
+    font-size: 1.2vw;
+    animation: loading calc(var(--anitime) * 2) ease-in-out infinite;
+}
+
+@keyframes jump {
+    0% {
+        transform: scale(1, 0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1, 1);
+        opacity: 1;
+    }
+}
+
+@keyframes loading {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+#controlbar {
+    transform: scale(1, 0%);
+    opacity: 0;
+    display: flex;
+    transition-timing-function: ease-out;
+}
+
+.panel {
+    width: 15vw;
+    height: 20vw;
+    padding: 10px;
+    border: var(--Border);
+    background-color: var(--Background-Color);
+    border-radius: var(--Border-Radius);
+    display: inline-block;
+    font-size: 18px;
+    vertical-align: middle;
+    margin: 20px;
+}
+
+.panel .title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+hr {
+    height: 0px;
+    background: none;
+    border: 1px var(--LineColor) solid;
+    width: 70%;
+    display: inline-block;
+}
+
+.avatarimg {
+    width: 3vw;
+    height: 3vw;
+    border: var(--Border);
+    border-width: 3px;
+    border-radius: 50%;
+    margin-top: 5px;
+}
+
+button {
+    background-color: rgba(255, 255, 255, 10%);
+    padding: 5px 10px;
+    margin: 2px;
+    cursor: pointer;
+    border-top: transparent 2px solid;
+    border-bottom: transparent 2px solid;
+    border-radius: 5px;
+}
+
+button.small {
+    padding: 1px 8px;
+}
+
+button.hasNotRadius {
+    border-radius: 0;
+}
+
+button.hoverPlus:hover {
+    border-color: var(--LineColor);
+}
+
+button.hoverButBlock::after {
+    opacity: 0;
+}
+
+button.quickStart {
+    width: 120px;
+    text-align: center;
+    margin: 5px;
+    border-left: var(--Border);
+    border-right: var(--Border);
+}
+
+button.heightBorder {
+    border-left: var(--Border);
+    border-right: var(--Border);
+}
+
+button.hoverButBlock:hover {
+    background-color: rgba(255, 255, 255, 20%);
+
+}
+
+button.hoverButBlock {
+    background-color: transparent;
+}
+
+button.linkbtn {
+    background-color: transparent;
+    border-bottom: var(--Border);
+}
+
+button::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -2px;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    transition: all calc(var(--anitime) * 0.5) ease-in-out;
+    background-color: rgba(255, 255, 255, 30%);
+    border-top: rgba(255, 255, 255, 30%) 2px solid;
+    border-bottom: rgba(255, 255, 255, 30%) 2px solid;
+    border-radius: 5px;
+    transform: scale(1, 0);
+}
+
+button:hover::after {
+    transform: scale(1, 1);
+}
+
+.infobox {
+    border: var(--Border);
+    background: transparent;
+    padding: 10px;
+    display: inline-block;
+}
+
+input {
+    border: none;
+    border-bottom: var(--LineColor) 2px solid;
+    background-color: transparent;
+    text-align: left;
+}
+
+#aiaskinput {
+    width: 90%;
+}
+
+#aiaskinput:hover,
+#aiaskinput:focus {
+    background-color: rgba(255, 255, 255, 10%);
+}
+
+#msgc {
+    height: 70%;
+    overflow-y: scroll;
+}
+
+#msgc::-webkit-scrollbar {
+    display: none;
+}
+
+.msgbox {
+    padding: 5px;
+    border: var(--Border);
+    background-color: var(--Background-Color);
+    border-radius: 10px;
+    word-wrap: break-word;
+    display: inline-block;
+    font-size: 13px;
+    text-align: left;
+    max-width: 90%;
+}
+
+.msgbox.ai::after {
+    content: "";
+    font-weight: bolder;
+    animation: loading 1s linear infinite;
+    width: 2px;
+    height: 16px;
+    border: none;
+    background-color: white;
+    margin-left: 2px;
+    display: inline-block;
+}
+
+.msgboxc .avatarimg {
+    width: 30px;
+    height: 30px;
+    vertical-align: bottom;
+    margin: 5px;
+    border-width: 2px;
+}
+
+.msgboxc {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 5px;
+    transition: all var(--anitime) ease-out;
+}
+
+.msgboxc.right {
+    text-align: right;
+    transform: scale(0);
+    transform-origin: 100% 0%;
+}
+
+.msgboxc.left {
+    text-align: left;
+    transform: scale(0);
+    transform-origin: 0% 0%;
+}
+
+.msgboxc.right .msgbox {
+    margin-right: 20px;
+}
+
+.msgboxc.left .msgbox {
+    margin-left: 20px;
+}
+
+.msgbox * {
+    font-size: inherit;
+    word-wrap: inherit;
+    text-align: inherit;
+}
+
+code {
+    text-wrap: nowrap;
+    max-width: 90%;
+    overflow-x: scroll;
+}
+
+code::-webkit-scrollbar {
+    background-color: transparent;
+}
+
+code::-webkit-scrollbar-button {
+    display: none;
+}
+
+code::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 20%);
+}
+
+.fa {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.dirBox {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+}
+
+.progName {
+    margin-left: auto;
+    white-space: nowrap;
+    max-width: 80%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#proglist {
+    overflow: scroll;
+    height: 80%;
+}
+
+#proglist::-webkit-scrollbar {
+    display: none;
+}
+
+.selectBox {
+    background-color: var(--Background-Color);
+    border: var(--Border);
+    border-radius: 5px;
+}
+
+.selectBox .selectOptions {
+    transform-origin: 50% 100%;
+    transform: scale(1, 0);
+    opacity: 0;
+}
+
+.selectBox .selectOptions:hover {
+    background-color: transparent;
+}
+
+.selectBox *:hover,
+.selectBox:hover {
+    background-color: rgba(255, 255, 255, 20%);
+    cursor: pointer;
+}
+
+.selectBox .selectName::before {
+    margin-right: 10px;
+    content: ">";
+}
+
+.selectBox .selectName::after {
+    margin-left: 10px;
+    content: "<";
+}
+
+.selectBox .selectName:hover {
+    background-color: transparent;
+}
