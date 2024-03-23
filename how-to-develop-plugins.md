@@ -27,9 +27,9 @@ ShrimpIF.PluginList.Register({
 |PictureBox|`Source`<br>`WidthCSS`<br>`HeightCSS`<br>`Radius`|string<br>string<br>string<br>number|图片框，可使用CSS适配大小|
 
 ShrimpIF内置组件较少，所以提供了接口使开发者可自定义组件。  
-来自 `ShrimpIF.UI.ShrimpElement` 类，继承此类可自定义开发。
+来自 `ShrimpIF.ShrimpElement` 类，继承此类可自定义开发。
 ```javascript
-class MyElement extends ShrimpIF.UI.ShrimpElement{
+class MyElement extends ShrimpIF.ShrimpElement{
     Update(){
         //组件刷新时生成逻辑，覆写此方法实现自定义组件
         
