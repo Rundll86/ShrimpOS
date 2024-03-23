@@ -7,12 +7,12 @@ npm install shrimp-if --save-dev
 ### 注册到插件列表
 ```js
 const ShrimpIF=require("shrimp-if");
-ShrimpIF.PluginList.Register({
-    ID:"插件ID，不同插件可重名，内部使用ID区分。",
-    Name:"显示名称",
-    Version:"版本",
-    Author:"作者"
-});
+ShrimpIF.PluginList.Register(
+    ID="插件ID，不同插件可重名，内部使用ID区分。",
+    Name="显示名称",
+    Version="版本",
+    Author="作者"
+);
 ```
 ### 编写用户界面
 `ShrimpIF` 全局对象提供了可快速生成元素的工具，来自`ShrimpIF.UI.QuickElements`  
