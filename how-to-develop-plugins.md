@@ -17,7 +17,9 @@ ShrimpIF.PluginList.Register({
 可用组件
 |标识符|参数表|描述|
 |-|-|-|
-|PanelBox|`Title[string]`,`Width[number]`,`Height[number]`|容器面板，可在界面中拓展ShrimpOS功能|
+|PanelBox|`Title[string]`  
+`Width[number]`  
+`Height[number]`|容器面板，可在界面中拓展ShrimpOS功能|
 |Label|`Text[string]`,`BigSize[boolean]`,`Bolder[boolean]`,`ColorCSS[string]`||
 |NewLine|None||
 |ButtonBox|`Text[string]`,`SmallSize[boolean]`,`StyleList[Array<ButtonStyleTypes>]`,`AfterClick[Function<null>]()`||
