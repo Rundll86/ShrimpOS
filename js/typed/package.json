@@ -1,0 +1,12 @@
+{
+  "name": "shrimp-if",
+  "version": "1.0.2",
+  "description": "The type declaration of ShrimpIF.",
+  "scripts": {
+    "test": ";",
+    "pub": "npm version patch && npm publish"
+  },
+  "author": "FallingShrimp",
+  "license": "ISC",
+  "types": "index.d.ts"
+}
