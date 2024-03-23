@@ -35,3 +35,18 @@ var btn=new ShrimpIF.UI.QuickElements.ButtonBox;
 btn.Text="Button";
 ShrimpIF.UI.Rendering("body",btn,true);
 ```
+ShrimpIF内置组件较少，所以提供了接口使开发者可自定义组件。  
+来自 `ShrimpIF.UI.ShrimpElement` 类，继承此类可自定义开发。
+```javascript
+class MyElement extends ShrimpIF.UI.ShrimpElement{
+    Update(){
+        //组件刷新时生成逻辑，覆写此方法实现自定义组件
+        
+        this.GetChildHTMLElement();
+        //此方法可依照当前组件的子组件列表递归生成它们的HTML元素对象，不要覆写
+
+        return Result;
+        //生成结果应是一个HTML元素对象
+    }
+}
+```
