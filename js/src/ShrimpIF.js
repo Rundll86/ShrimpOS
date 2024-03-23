@@ -9,6 +9,7 @@ class AI {
             "gpt-4-all",
             "llama-2-13b"
         ];
+        if (!Object.keys(NameMap).includes(this.MessageType)) { return this.MessageType; };
         return NameMap[this.MessageType];
     };
     __chatnio__ = new chatnio.Chat(-1);
@@ -184,6 +185,16 @@ const UI = {
                 this.Elements = UI.Rendering(Query, Target, Bind).Elements;
             }
         };
+    },
+    FromHtmlElement(Name) {
+        class CustomElement extends ShrimpElement {
+            Update() {
+                let res = document.createElement(Name);
+                res.appendChild(this.GetChildHTMLElement());
+                return res;
+            };
+        };
+        return CustomElement;
     }
 };
 UI.ShrimpElement = ShrimpElement;
