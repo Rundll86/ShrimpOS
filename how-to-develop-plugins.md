@@ -9,6 +9,9 @@ npm install shrimp-if --save-dev
 const ShrimpIF=require("shrimp-if");
 ShrimpIF.PluginList.Register(
     ID="插件ID，不同插件可重名，内部使用ID区分。",
+    RequirePlugin=[
+        "需求的前置插件ID"
+    ],
     Name="显示名称",
     Version="版本",
     Author="作者"
