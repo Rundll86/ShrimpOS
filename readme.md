@@ -1,5 +1,6 @@
-初始化+编译
+初始化+编译（需求Node.js、NPM、Python3与PIP）
 ```batch
+.\init.bat
 cd js
 npm install
 npm run build

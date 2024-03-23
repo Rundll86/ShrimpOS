@@ -1,4 +1,4 @@
-import flask, os, flask_cors, json, ctypes, msvcrt, subprocess
+import flask, os, flask_cors, json
 
 app = flask.Flask(__name__)
 flask_cors.CORS(app)
