@@ -1,4 +1,4 @@
-var ShrimpIF = require("shrimp-if");
+var ShrimpIF = require("../js/node_modules/shrimp-if");
 var my_panel = new ShrimpIF.UI.QuickElements.PanelBox;
 my_panel.Title = "抽象图像生成器";
 var my_label = new ShrimpIF.UI.QuickElements.Label;

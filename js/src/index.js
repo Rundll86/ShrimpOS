@@ -214,6 +214,7 @@ function connectAndInit() {
                     loadprogress.finish += data.length;
                     for (let i = 0; i < data.length; i++) {
                         eval(data[i]);
+                        ShrimpIF.PluginList.__onlyone__ = false;
                         loadprogress.finish++;
                     };
                 }

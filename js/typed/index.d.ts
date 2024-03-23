@@ -69,7 +69,7 @@ declare namespace UI {
     function FromHtmlElement(Name: string): ShrimpElement;
 }
 declare namespace PluginList {
-    function Register(ID: string, Name?: string, Version?: string, Author?: string, Description?: string): void;
+    function Register(ID: string, RequirePlugin?: Array<string>, Name?: string, Version?: string, Author?: string, Description?: string): void;
     function Read(ID: string): { Name: string, Version: string, Author: string, Description: string };
     function Remove(ID: string): void;
 }

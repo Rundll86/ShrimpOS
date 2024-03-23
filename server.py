@@ -71,7 +71,11 @@ def runatstartmenu():
 
 @app.route("/getPlugins")
 def getplugins():
-    res = json.load(getfile("user/plugin.json"))
+    res = []
+    for root, _, files in os.walk("plugins"):
+        for j in files:
+            if os.path.splitext(j)[1].upper() == ".JS":
+                res.append(os.path.join(root, j))
     ans = []
     for i in res:
         ans.append(getfile(i).read())

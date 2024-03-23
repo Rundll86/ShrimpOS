@@ -215,10 +215,29 @@ const UI = {
 UI.ShrimpElement = ShrimpElement;
 const PluginList = {
     __content__: {},
-    Register(ID, Name = "UnkownPlugin", Version = "1.0.0", Author = "Everyone", Description = "A plugin.") {
+    __onlyone__: false,
+    get __namelist__() {
+        return Object.keys(this.__content__);
+    },
+    Register(ID, RequirePlugin = [], Name = "UnkownPlugin", Version = "1.0.0", Author = "Everyone", Description = "A plugin.") {
         if (!ID) {
-            throw new Error("Cannot register plugin.");
+            throw (
+                new Error("Cannot register plugin.")
+            );
         };
+        for (let i = 0; i < RequirePlugin.length; i++) {
+            if (!this.__namelist__.includes(RequirePlugin[i])) {
+                throw (
+                    new Error(`Plugin [${ID}(${Name})] requires plugin [${RequirePlugin[i]}].`)
+                );
+            };
+        };
+        if (this.__onlyone__) {
+            throw (
+                new Error("Only one plugin can be registered for a file.")
+            );
+        };
+        this.__onlyone__ = true;
         if (Object.keys(this.__content__).includes(ID)) { this.Remove(ID); };
         this.__content__[ID] = [Name, Version, Author, Description];
     },
