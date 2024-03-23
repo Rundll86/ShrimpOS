@@ -42,7 +42,7 @@ async function reloadQuota(callback) {
         callback();
     }
     catch {
-        reloadQuota();
+        //reloadQuota();
     };
 };
 function reloadHighlight() {
@@ -177,7 +177,7 @@ function pingAPI(callback = (status) => { }) {
 };
 var loadprogress = {
     finish: 0,
-    target: 6,
+    target: 5,
     get schedule() { return this.finish / this.target * 100; },
     get onFinished() { return this.finish >= this.target; }
 };
@@ -210,11 +210,10 @@ function connectAndInit() {
                 url: "http://localhost:25565/getPlugins",
                 type: "get",
                 success(data) {
+                    try { var data = JSON.parse(data); } catch { };
                     loadprogress.finish += data.length;
                     for (let i = 0; i < data.length; i++) {
-                        let scriptLabel = document.createElement("script");
-                        scriptLabel.src = data[i];
-                        document.head.appendChild(scriptLabel);
+                        eval(data[i]);
                         loadprogress.finish++;
                     };
                 }

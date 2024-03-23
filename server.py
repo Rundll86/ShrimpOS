@@ -71,7 +71,11 @@ def runatstartmenu():
 
 @app.route("/getPlugins")
 def getplugins():
-    return json.load(getfile("user/plugin.json"))
+    res = json.load(getfile("user/plugin.json"))
+    ans = []
+    for i in res:
+        ans.append(getfile(i).read())
+    return ans
 
 
 @app.route("/ping")

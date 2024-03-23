@@ -1,4 +1,4 @@
-var ShrimpIF = require("../src/ShrimpIF.js");
+var ShrimpIF = require("shrimp-if");
 var my_panel = new ShrimpIF.UI.QuickElements.PanelBox;
 my_panel.Title = "抽象图像生成器";
 var my_label = new ShrimpIF.UI.QuickElements.Label;
@@ -64,4 +64,4 @@ my_panel.Append(my_btn);
 my_panel.Append(my_label3);
 my_panel.Append(my_img);
 var panelrendering = ShrimpIF.UI.Rendering("#controlbar", my_panel);
-ShrimpIF.PluginList.Register({ ID: "my-plugin" });
+ShrimpIF.PluginList.Register("my-plugin");
