@@ -186,6 +186,7 @@ const UI = {
         };
     }
 };
+UI.ShrimpElement = ShrimpElement;
 const PluginList = {
     __content__: {},
     Register({ ID, Name = "UnkownPlugin", Version = "1.0.0", Author = "Everyone", Description = "A plugin." }) {
