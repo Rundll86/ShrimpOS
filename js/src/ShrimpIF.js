@@ -168,6 +168,13 @@ const UI = {
         };
         return res;
     },
+    /**
+     * 
+     * @param {*} Query 
+     * @param {ShrimpElement} Target 
+     * @param {*} Bind 
+     * @returns 
+     */
     Rendering(Query, Target, Bind = false) {
         let res = [];
         document.querySelectorAll(Query).forEach((e) => {
@@ -177,12 +184,20 @@ const UI = {
             res.push(current);
         });
         return {
+            /**
+             * @type {Array<HTMLElement>}
+             */
             Elements: res,
+            Target,
             Reload() {
+                let newres = [];
                 for (let i = 0; i < this.Elements.length; i++) {
+                    let newcurrent = Target.Update();
+                    this.Elements[i].parentElement.insertBefore(newcurrent, this.Elements[i]);
                     this.Elements[i].remove();
+                    newres.push(newcurrent);
                 };
-                this.Elements = UI.Rendering(Query, Target, Bind).Elements;
+                this.Elements = newres;
             }
         };
     },
