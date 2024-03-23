@@ -15,13 +15,12 @@ ShrimpIF.PluginList.Register({
 });
 ```
 可用组件
-|标识符|参数表|描述|
-|-|-|-|
-|PanelBox|`Title[string]`  
-`Width[number]`  
-`Height[number]`|容器面板，可在界面中拓展ShrimpOS功能|
-|Label|`Text[string]`,`BigSize[boolean]`,`Bolder[boolean]`,`ColorCSS[string]`||
-|NewLine|None||
-|ButtonBox|`Text[string]`,`SmallSize[boolean]`,`StyleList[Array<ButtonStyleTypes>]`,`AfterClick[Function<null>]()`||
-|SelectBox|`Options[Array<string>]`,`Current[number]`,`Title[string]`,`Opened[boolean]`,`TopValue[string]`,`AfterChange[Function<null>]()`||
-|PictureBox|`Source[string]`,`WidthCSS[string]`,`HeightCSS[string]`,`Radius[number]`||
+|标识符|参数表|类型|描述|
+|-|-|-|-|
+|PanelBox|`Title`<br>`Width`<br>`Height`|string<br>number<br>number|容器面板，可在界面中拓展ShrimpOS功能|
+|Label|`Text`<br>`BigSize`<br>`Bolder`<br>`ColorCSS`|string<br>boolean<br>boolean<br>string|标签，显示文字|
+|NewLine|None||换行符，只是个\<br\>组件|
+|ButtonBox|`Text`<br>`SmallSize`<br>`StyleList`<br>`AfterClick`|string<br>boolean<br>Array\<ButtonStyleTypes\><br>Function\<null\>()|按钮，可使用特殊样式|
+|SelectBox|`Options`<br>`Current`<br>`Title`<br>`Opened`<br>`TopValue`<br>`AfterChange`|Array\<string\><br>number<br>string<br>boolean<br>`get` number<br>Function\<null\>()|选择器，用户可查看选项并按需选择|
+|PictureBox|`Source`<br>`WidthCSS`<br>`HeightCSS`<br>`Radius`|string<br>string<br>string<br>number|图片框，可使用CSS适配大小|
+测试
