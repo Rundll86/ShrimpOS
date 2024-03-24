@@ -3,7 +3,10 @@
 npm init -y
 npm install shrimp-if --save-dev
 ```
-**ShrimpPlugin不需要经由webpack编译，安装声明文件仅作为辅助开发。**
+<u>**_ShrimpPlugin不需要经由webpack编译，安装声明文件仅作为辅助开发。_**</u>  
+<u>**_导入声明文件必须使用 `require` 函数导入而非 `import from`！_**</u>  
+<u>**_ShrimpIF加载插件时对 `require` 函数做了特殊处理，如果脚本中需要导入非 `ShrimpIF` 的其他模块，请使用webpack编译bundle！_**</u>
+
 ### 注册到插件列表
 ```js
 const ShrimpIF=require("shrimp-if");
