@@ -8,6 +8,14 @@ def getfile(path, writable=False):
     return open(path, "w" if writable else "r", encoding="utf8")
 
 
+def runExe(path):
+    targetpath = os.path.dirname(path)
+    targetfile = os.path.basename(path)
+    os.chdir(targetpath)
+    os.startfile(targetfile)
+
+
+@app.before_request
 def reload():
     global userinfo, programlist, rundir, appdata, desktoplist
     rundir = os.path.dirname(__file__)
@@ -18,9 +26,6 @@ def reload():
         os.environ["appdata"], "Microsoft\Windows\Start Menu\Programs"
     )
     desktoplist = json.load(getfile("user/desktop.json"))
-
-
-reload()
 
 
 @app.route("/cmd/<cmd>")
@@ -40,11 +45,7 @@ def getuser(key):
 @app.route("/run/<name>")
 def runprogram(name):
     if name in programlist.keys():
-        targetpath = os.path.dirname(programlist[name])
-        targetfile = os.path.basename(programlist[name])
-        os.chdir(targetpath)
-        os.startfile(targetfile)
-        reload()
+        runExe(programlist[name])
         return "ok"
     else:
         return "not found"
@@ -63,10 +64,7 @@ def getstartmenu():
 
 @app.route("/runAtStartMenu", methods=["post"])
 def runatstartmenu():
-    targetpath = os.path.dirname(flask.request.form["target"])
-    os.chdir(targetpath)
-    os.startfile(flask.request.form["target"])
-    reload()
+    runExe(flask.request.form["target"])
     return "ok"
 
 
@@ -89,6 +87,14 @@ def getdesktop():
     for i in desktoplist:
         res.append(i[1])
     return res
+
+
+@app.route("/runDesktop/<name>")
+def rundesktop(name):
+    for i in desktoplist:
+        if i[1] == name:
+            runExe(i[0])
+    return "ok"
 
 
 @app.route("/getIcon/<name>")

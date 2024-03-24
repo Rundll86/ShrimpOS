@@ -1,7 +1,37 @@
 [
     [
-        "target",
-        "name",
-        "D:/Project/ISC 6.0/IMG/Icon.ico"
+        "C:/Program Files (x86)/Steam/steam.exe",
+        "Steam",
+        "D:/Project/ShrimpOS/user/icon/steam.ico"
+    ],
+    [
+        "D:/Genshin Impact/launcher.exe",
+        "原神",
+        "D:/Project/ShrimpOS/user/icon/yuanshen.ico"
+    ],
+    [
+        "D:/Star Rail/launcher.exe",
+        "崩坏：星穹铁道",
+        "D:/Project/ShrimpOS/user/icon/starrail.ico"
+    ],
+    [
+        "C:/Program Files/Microsoft Office/root/Office16/EXCEL.EXE",
+        "Excel",
+        "D:/Project/ShrimpOS/user/icon/excel.ico"
+    ],
+    [
+        "C:/Program Files/Microsoft Office/root/Office16/POWERPNT.EXE",
+        "PowerPoint",
+        "D:/Project/ShrimpOS/user/icon/ppt.ico"
+    ],
+    [
+        "C:/Program Files/Microsoft Office/root/Office16/WINWORD.EXE",
+        "Word",
+        "D:/Project/ShrimpOS/user/icon/word.ico"
+    ],
+    [
+        "C:/Windows/System32/cmd.exe",
+        "命令提示符",
+        "D:/Project/ShrimpOS/user/icon/cmd.ico"
     ]
 ]

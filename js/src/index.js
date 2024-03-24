@@ -112,7 +112,7 @@ function runAtSM(path) {
 function generateProgramBox(data, path) {
     let result = document.createElement("button");
     result.classList.add("dirBox", "hoverPlus", "hoverButBlock");
-    result.addEventListener("dblclick", () => runAtSM(path));
+    result.addEventListener("click", () => runAtSM(path));
     let icon = document.createElement("span");
     icon.classList.add("fa", "fa-folder");
     let nameBox = document.createElement("span");
@@ -139,7 +139,7 @@ var posX = 0;
 var speedY = 0;
 var mouseDown = false;
 var progMouseDown = false;
-console.log(progboxlist);
+var proglistopen = false;
 window.addEventListener("mousedown", () => {
     mouseDown = true;
 });
@@ -164,6 +164,7 @@ window.addEventListener("mousemove", (e) => {
                 e.style.margin = "10px";
             });
             loadprogress.target += 5;
+            proglistopen = true;
         };
         if (e.movementY > 50) {
             progbar.style.transform = "translateY(0px) scale(1,0)";
@@ -176,8 +177,13 @@ window.addEventListener("mousemove", (e) => {
                 e.style.margin = "0px";
             });
             loadprogress.finish = loadprogress.target;
+            proglistopen = false;
         };
-        posX += e.movementX * 2;
+        if (proglistopen) {
+            posX = 0;
+        } else {
+            posX += e.movementX * 2;
+        };
     };
     let scalefunc;
     if (loadprogress.onFinished) {
@@ -261,6 +267,12 @@ function connectAndInit() {
                                                 for (let i = 0; i < data.length; i++) {
                                                     let progcontainer = document.createElement("div");
                                                     progcontainer.classList.add("progbox");
+                                                    progcontainer.addEventListener("click", () => {
+                                                        $.ajax({
+                                                            url: "http://localhost:25565/runDesktop/" + data[i],
+                                                            type: "get"
+                                                        });
+                                                    });
                                                     let progicon = document.createElement("img");
                                                     progicon.classList.add("progicon");
                                                     progicon.src = "http://localhost:25565/getIcon/" + data[i];
