@@ -10,6 +10,8 @@ const msgc = document.getElementById("msgc");
 const msginbox = document.getElementById("aiaskinput");
 const quotanum = document.getElementById("quotanum");
 const proglist = document.getElementById("proglist");
+const progbar = document.getElementById("progbar");
+const loadingtextsmall = document.getElementById("loadingtext-small");
 var lastaskend = true;
 const ShrimpIF = require("./ShrimpIF.js");
 const MarkdownIt = require("markdown-it");
@@ -137,6 +139,7 @@ var posX = 0;
 var speedY = 0;
 var mouseDown = false;
 var progMouseDown = false;
+console.log(progboxlist);
 window.addEventListener("mousedown", () => {
     mouseDown = true;
 });
@@ -149,8 +152,40 @@ proglist.addEventListener("mousedown", () => {
 });
 window.addEventListener("mousemove", (e) => {
     e.preventDefault();
-    if (mouseDown) { posX += e.movementX * 2; }
-    controlbar.style.marginLeft = posX + "px";
+    if (mouseDown) {
+        if (e.movementY < -50) {
+            progbar.style.transform = "translateY(-300px) scale(1,1)";
+            progbar.style.opacity = "1";
+            controlbar.style.transform = "scale(1,0)";
+            controlbar.style.opacity = "0";
+            infobar.style.opacity = 0;
+            progboxlist.forEach((e) => {
+                e.style.height = "175px";
+                e.style.margin = "10px";
+            });
+            loadprogress.target += 5;
+        };
+        if (e.movementY > 50) {
+            progbar.style.transform = "translateY(0px) scale(1,0)";
+            progbar.style.opacity = "0";
+            controlbar.style.transform = "scale(1,1)";
+            controlbar.style.opacity = "1";
+            infobar.style.opacity = 1;
+            progboxlist.forEach((e) => {
+                e.style.height = "0px";
+                e.style.margin = "0px";
+            });
+            loadprogress.finish = loadprogress.target;
+        };
+        posX += e.movementX * 2;
+    };
+    let scalefunc;
+    if (loadprogress.onFinished) {
+        scalefunc = "scale(1,1)";
+    } else {
+        scalefunc = "scale(1,0)";
+    };
+    controlbar.style.transform = `translateX(${posX}px) ${scalefunc}`;
 });
 proglist.addEventListener("mousemove", (e) => {
     if (progMouseDown) {
@@ -181,75 +216,99 @@ var loadprogress = {
     get schedule() { return this.finish / this.target * 100; },
     get onFinished() { return this.finish >= this.target; }
 };
+var progboxlist;
 exposetowindow(loadprogress, "loadprogress");
 function connectAndInit() {
     pingAPI((status) => {
         if (status) {
             loadprogress.finish++;
-            reloadQuota(() => { loadprogress.finish++; });
-            $.ajax({
-                url: "http://localhost:25565/getstartmenu",
-                type: "get",
-                success(data) {
-                    for (let i = 0; i < data.length; i++) {
-                        let data0 = data[i];
-                        proglist.appendChild(generateProgramBox(data0[0], data0[1]));
-                    };
-                    loadprogress.finish++;
-                }
-            });
-            $.ajax({
-                url: "http://localhost:25565/getuser/name",
-                type: "get",
-                success(data) {
-                    usernamelabel.innerText = data;
-                    loadprogress.finish++;
-                }
-            });
-            $.ajax({
-                url: "http://localhost:25565/getPlugins",
-                type: "get",
-                success(data) {
-                    try { var data = JSON.parse(data); } catch { };
-                    loadprogress.finish += data.length;
-                    for (let i = 0; i < data.length; i++) {
-                        eval(data[i]);
-                        ShrimpIF.PluginList.__onlyone__ = false;
+            loadingtextsmall.innerHTML = "正在加载ChatNio";
+            reloadQuota(() => {
+                loadprogress.finish++;
+                loadingtextsmall.innerHTML = "正在下载程序列表";
+                $.ajax({
+                    url: "http://localhost:25565/getstartmenu",
+                    type: "get",
+                    success(data) {
+                        for (let i = 0; i < data.length; i++) {
+                            let data0 = data[i];
+                            proglist.appendChild(generateProgramBox(data0[0], data0[1]));
+                        };
                         loadprogress.finish++;
-                    };
-                }
+                        $.ajax({
+                            url: "http://localhost:25565/getuser/name",
+                            type: "get",
+                            success(data) {
+                                usernamelabel.innerText = data;
+                                loadprogress.finish++;
+                                loadingtextsmall.innerHTML = "正在加载插件";
+                                $.ajax({
+                                    url: "http://localhost:25565/getPlugins",
+                                    type: "get",
+                                    success(data) {
+                                        try { var data = JSON.parse(data); } catch { };
+                                        loadprogress.finish += data.length;
+                                        for (let i = 0; i < data.length; i++) {
+                                            eval(data[i]);
+                                            ShrimpIF.PluginList.__onlyone__ = false;
+                                            loadprogress.finish++;
+                                        };
+                                        loadingtextsmall.innerHTML = "正在下载桌面配置";
+                                        $.ajax({
+                                            url: "http://localhost:25565/getDesktop",
+                                            type: "get",
+                                            success(data) {
+                                                for (let i = 0; i < data.length; i++) {
+                                                    let progcontainer = document.createElement("div");
+                                                    progcontainer.classList.add("progbox");
+                                                    let progicon = document.createElement("img");
+                                                    progicon.classList.add("progicon");
+                                                    progicon.src = "http://localhost:25565/getIcon/" + data[i];
+                                                    let progtitle = document.createElement("span");
+                                                    progtitle.innerText = data[i];
+                                                    progcontainer.appendChild(progicon);
+                                                    progcontainer.appendChild(document.createElement("br"));
+                                                    progcontainer.appendChild(progtitle);
+                                                    progbar.appendChild(progcontainer);
+                                                };
+                                                progboxlist = document.querySelectorAll(".progbox");
+                                                loadingtextsmall.innerHTML = "正在下载用户数据";
+                                                avatarimg["src"] = "http://localhost:25565/getuser/avatar";
+                                                avatarimg.addEventListener("load", () => {
+                                                    loadprogress.finish++;
+                                                    loadingtextsmall.innerHTML = "最后清理";
+                                                    if (nowhour > 6 && nowhour < 12) {
+                                                        ttglabel.innerText = "早上";
+                                                    }
+                                                    else if (nowhour === 12) {
+                                                        ttglabel.innerText = "中午";
+                                                    }
+                                                    else if (nowhour > 12 && nowhour < 18) {
+                                                        ttglabel.innerText = "下午";
+                                                    }
+                                                    else {
+                                                        ttglabel.innerText = "晚上";
+                                                    };
+                                                    loadingtextsmall.style.color = "transparent";
+                                                    infobar.style.transform = "translateY(-1vw) scale(0.6)";
+                                                    loadingtext.innerText = "- 准备就绪 -";
+                                                    controlbar.style.transform = "scale(1,1)";
+                                                    controlbar.style.opacity = "1";
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
             });
-            if (nowhour > 6 && nowhour < 12) {
-                ttglabel.innerText = "早上";
-            }
-            else if (nowhour === 12) {
-                ttglabel.innerText = "中午";
-            }
-            else if (nowhour > 12 && nowhour < 18) {
-                ttglabel.innerText = "下午";
-            }
-            else {
-                ttglabel.innerText = "晚上";
-            };
-            avatarimg["src"] = "http://localhost:25565/getuser/avatar";
-            avatarimg.addEventListener("load", () => { loadprogress.finish++; });
-            requestAnimationFrame(hideloadingbar);
         }
         else {
             connectAndInit();
         };
     });
-};
-function hideloadingbar() {
-    if (loadprogress.onFinished) {
-        infobar.style.transform = "translateY(-1vw) scale(0.6)";
-        loadingtext.innerText = "- 准备就绪 -";
-        controlbar.style.transform = "scale(1,1)";
-        controlbar.style.opacity = "1";
-    }
-    else {
-        requestAnimationFrame(hideloadingbar);
-    }
 };
 const ReqFrame = window.requestAnimationFrame
 window["ReqFrame"] = ReqFrame;

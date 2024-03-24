@@ -58,6 +58,11 @@ span {
     animation: loading calc(var(--anitime) * 2) ease-in-out infinite;
 }
 
+#loadingtext-small {
+    font-size: 1vw;
+    animation: loading calc(var(--anitime) * 2) ease-in-out infinite;
+}
+
 @keyframes jump {
     0% {
         transform: scale(1, 0);
@@ -377,4 +382,46 @@ code::-webkit-scrollbar-thumb {
 
 .selectBox .selectName:hover {
     background-color: transparent;
+}
+
+#content {
+    text-align: center;
+}
+
+#progbar {
+    width: 70%;
+    display: inline-block;
+    transform: translateY(0px) scale(1, 0);
+    opacity: 0;
+    overflow: scroll;
+    position: fixed;
+    left: 15%;
+    top: 60%;
+}
+
+#progbar::-webkit-scrollbar {
+    display: none;
+}
+
+#progbar .progbox {
+    width: 150px;
+    height: 0px;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 0px;
+}
+
+#progbar .progbox:hover {
+    background-color: rgba(255, 255, 255, 20%);
+}
+
+.progbox .progicon {
+    width: 90px;
+    height: 90px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#upmenu {
+    transform: translateY(0px);
 }

@@ -9,7 +9,7 @@ def getfile(path, writable=False):
 
 
 def reload():
-    global userinfo, programlist, rundir, appdata
+    global userinfo, programlist, rundir, appdata, desktoplist
     rundir = os.path.dirname(__file__)
     os.chdir(rundir)
     userinfo = json.load(getfile("user/info.json"))
@@ -17,6 +17,7 @@ def reload():
     appdata = os.path.join(
         os.environ["appdata"], "Microsoft\Windows\Start Menu\Programs"
     )
+    desktoplist = json.load(getfile("user/desktop.json"))
 
 
 reload()
@@ -80,6 +81,21 @@ def getplugins():
     for i in res:
         ans.append(getfile(i).read())
     return ans
+
+
+@app.route("/getDesktop")
+def getdesktop():
+    res = []
+    for i in desktoplist:
+        res.append(i[1])
+    return res
+
+
+@app.route("/getIcon/<name>")
+def geticon(name):
+    for i in desktoplist:
+        if i[1] == name:
+            return flask.send_file(i[2])
 
 
 @app.route("/ping")
