@@ -322,7 +322,7 @@ function connectAndInit() {
                                                         controlbar.style.opacity = "1";
                                                         loadprogress.finishTask();
                                                         loadprogress.allCompleted = true;
-                                                        loadprogressbar.style.animationName = "jumpclose";
+                                                        loadprogressbar.style.transform = "scale(1,0)";
                                                     }));
 
                                                 }

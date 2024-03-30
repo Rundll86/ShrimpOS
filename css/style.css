@@ -539,9 +539,5 @@ code::-webkit-scrollbar-thumb {
 #loadprogressbar {
     width: fit-content;
     display: inline-block;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease-out;
-    --px: 0px;
-    --py: 0px;
+    transform: scale(1, 1);
 }
