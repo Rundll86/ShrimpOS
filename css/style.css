@@ -540,4 +540,5 @@ code::-webkit-scrollbar-thumb {
     width: fit-content;
     display: inline-block;
     transform: scale(1, 1);
+    opacity: 1;
 }

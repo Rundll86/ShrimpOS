@@ -323,8 +323,8 @@ function connectAndInit() {
                                                         loadprogress.finishTask();
                                                         loadprogress.allCompleted = true;
                                                         loadprogressbar.style.transform = "scale(1,0)";
+                                                        loadprogressbar.style.opacity = "0";
                                                     }));
-
                                                 }
                                             });
                                         }
