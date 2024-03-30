@@ -15,7 +15,6 @@
   "dependencies": {
     "css-loader": "^6.10.0",
     "dts-gen": "^0.10.1",
-    "electron": "^29.1.5",
     "highlight": "^0.2.4",
     "highlight.js": "^11.9.0",
     "jquery": "^3.7.1",

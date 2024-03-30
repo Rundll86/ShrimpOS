@@ -1,8 +1,8 @@
 declare module "shrimp-if";
 declare enum MsgTypes {
-    TEXT = 0,
-    PICTURE = 1,
-    CODE = 2
+    TEXT,
+    PICTURE,
+    CODE
 }
 declare class AI {
     MessageType: MsgTypes;
@@ -21,13 +21,9 @@ declare class ShrimpElement {
     GetChildHTMLElement(): HTMLDivElement;
 }
 declare enum ButtonStyleTypes {
-    HoverWithBorder = 0,
-    HoverWithoutFlushBar = 1,
-    HeightBorderBar = 2
-}
-declare type RenderingToolbox = {
-    Elements: Array<HTMLElement>,
-    Reload(): void
+    HoverWithBorder,
+    HoverWithoutFlushBar,
+    HeightBorderBar
 }
 declare namespace UI {
     namespace QuickElements {
@@ -64,8 +60,16 @@ declare namespace UI {
             Radius: number;
         }
     }
-    function HtmlElement(Name: string, ClassList?: Array<string>, Style?: Object, CustomAttrs?: Object): HTMLElement;
-    function Rendering(Query: string, Target: ShrimpElement, Bind?: boolean): RenderingToolbox;
+    class RendererContext {
+        LastResult: Array<HTMLElement>;
+        RenderingTarget: ShrimpElement;
+        Selector: string
+        Reload(): void;
+        Remove(): void;
+        constructor(RenderingTarget: ShrimpElement, Selector: string, LastResult?: Array<HTMLElement>);
+    }
+    function CreateHtmlElement(Name: string, ClassList?: Array<string>, Style?: Object, CustomAttrs?: Object): HTMLElement;
+    function Rendering(Query: string, Target: ShrimpElement, Bind?: boolean): RendererContext;
     function FromHtmlElement(Name: string): ShrimpElement;
 }
 declare namespace PluginList {
@@ -73,4 +77,23 @@ declare namespace PluginList {
     function Read(ID: string): { Name: string, Version: string, Author: string, Description: string };
     function Remove(ID: string): void;
 }
-export { AI, ShrimpElement, ButtonStyleTypes, MsgTypes, RenderingToolbox, UI, PluginList };
+declare namespace Message {
+    class MessageBox extends ShrimpElement {
+        Color: MsgBoxColors;
+        Title: string;
+        Position: [number, number];
+        Show(): void;
+        Hide(): void;
+    }
+    function Show(Color: MsgBoxColors, Content: ShrimpElement, Title: string): MessageBox;
+}
+declare enum MsgBoxColors {
+    Info,
+    Warning,
+    Error,
+    FatalError
+}
+declare namespace Toolbox {
+    function RandomInt(Min: number, Max: number): number;
+}
+export { AI, ShrimpElement, ButtonStyleTypes, MsgTypes, UI, PluginList, Message, MsgBoxColors, Toolbox };

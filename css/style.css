@@ -425,3 +425,123 @@ code::-webkit-scrollbar-thumb {
 #upmenu {
     transform: translateY(0px);
 }
+
+.msgbox-p {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    border-radius: 5px;
+    min-width: 200px;
+    min-height: 150px;
+    transform: translate(var(--px), var(--py)) scale(0);
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
+    --px: 0px;
+    --py: 0px;
+}
+
+@keyframes msgboxopen {
+    0% {
+        opacity: 0;
+        transform: translate(var(--px), var(--py)) scale(0, 0);
+    }
+
+    20% {
+        transform: translate(var(--px), var(--py)) scale(80%, 120%);
+    }
+
+    40% {
+        transform: translate(var(--px), var(--py)) scale(120%, 80%);
+    }
+
+    60% {
+        transform: translate(var(--px), var(--py)) scale(90%, 110%);
+    }
+
+    80% {
+        transform: translate(var(--px), var(--py)) scale(110%, 90%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(var(--px), var(--py)) scale(1, 1);
+    }
+}
+
+@keyframes jumpclose {
+    0% {
+        opacity: 1;
+        transform: translate(var(--px), var(--py)) scale(1, 1);
+    }
+
+    20% {
+        transform: translate(var(--px), var(--py)) scale(80%, 120%);
+    }
+
+    40% {
+        transform: translate(var(--px), var(--py)) scale(120%, 80%);
+    }
+
+    60% {
+        transform: translate(var(--px), var(--py)) scale(90%, 110%);
+    }
+
+    80% {
+        transform: translate(var(--px), var(--py)) scale(110%, 90%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(var(--px), var(--py)) scale(0, 0);
+    }
+}
+
+.msgbox-p .title {
+    border-radius: 5px 5px 0px 0px;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+.aaabbbccc {
+    background-color: #240000;
+}
+
+.progressbar {
+    height: 15px;
+    background-color: var(--Background-Color);
+    --angle: 7px;
+    clip-path: polygon(var(--angle) 0%, calc(100% - var(--angle)) 0%, 100% 50%, calc(100% - var(--angle)) 100%, var(--angle) 100%, 0% 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progressbar .overlay {
+    height: 10px;
+    background-color: var(--LineColor);
+    --angle: 7px;
+    clip-path: polygon(var(--angle) 0%, calc(100% - var(--angle)) 0%, 100% 50%, calc(100% - var(--angle)) 100%, var(--angle) 100%, 0% 50%);
+    width: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progressbar .overlay .icon {
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 30%);
+    --angle: 5px;
+    clip-path: polygon(var(--angle) 0%, calc(100% - var(--angle)) 0%, 100% 50%, calc(100% - var(--angle)) 100%, var(--angle) 100%, 0% 50%);
+}
+
+#loadprogressbar {
+    width: fit-content;
+    display: inline-block;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
+    --px: 0px;
+    --py: 0px;
+}

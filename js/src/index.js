@@ -12,6 +12,7 @@ const quotanum = document.getElementById("quotanum");
 const proglist = document.getElementById("proglist");
 const progbar = document.getElementById("progbar");
 const loadingtextsmall = document.getElementById("loadingtext-small");
+const loadprogressbar = document.getElementById("loadprogressbar");
 var lastaskend = true;
 const ShrimpIF = require("./ShrimpIF.js");
 const MarkdownIt = require("markdown-it");
@@ -38,13 +39,13 @@ function shutdown() {
 function restart() {
     sendCmd("shutdown -r -t 0");
 };
-async function reloadQuota(callback) {
+async function reloadQuota(callback, error = () => { }) {
     try {
         quotanum.innerText = (await ShrimpIF.AI.GetQuota()).toFixed(2);
         callback();
     }
     catch {
-        //reloadQuota();
+        error();
     };
 };
 function reloadHighlight() {
@@ -140,6 +141,7 @@ var speedY = 0;
 var mouseDown = false;
 var progMouseDown = false;
 var proglistopen = false;
+var changing = false;
 window.addEventListener("mousedown", () => {
     mouseDown = true;
 });
@@ -154,6 +156,7 @@ window.addEventListener("mousemove", (e) => {
     e.preventDefault();
     if (mouseDown) {
         if (e.movementY < -50) {
+            changing = true;
             progbar.style.transform = "translateY(-300px) scale(1,1)";
             progbar.style.opacity = "1";
             controlbar.style.transform = "scale(1,0)";
@@ -163,10 +166,10 @@ window.addEventListener("mousemove", (e) => {
                 e.style.height = "175px";
                 e.style.margin = "10px";
             });
-            loadprogress.target += 5;
             proglistopen = true;
         };
         if (e.movementY > 50) {
+            changing = false;
             progbar.style.transform = "translateY(0px) scale(1,0)";
             progbar.style.opacity = "0";
             controlbar.style.transform = "scale(1,1)";
@@ -176,7 +179,6 @@ window.addEventListener("mousemove", (e) => {
                 e.style.height = "0px";
                 e.style.margin = "0px";
             });
-            loadprogress.finish = loadprogress.target;
             proglistopen = false;
         };
         if (proglistopen) {
@@ -184,14 +186,15 @@ window.addEventListener("mousemove", (e) => {
         } else {
             posX += e.movementX * 2;
         };
+        let scalefunc;
+        if (loadprogress.allCompleted && !changing) {
+            scalefunc = "scale(1,1)";
+        } else {
+            scalefunc = "scale(1,0)";
+        };
+        controlbar.style.transform = `translateX(${posX}px) ${scalefunc}`;
     };
-    let scalefunc;
-    if (loadprogress.onFinished) {
-        scalefunc = "scale(1,1)";
-    } else {
-        scalefunc = "scale(1,0)";
-    };
-    controlbar.style.transform = `translateX(${posX}px) ${scalefunc}`;
+
 });
 proglist.addEventListener("mousemove", (e) => {
     if (progMouseDown) {
@@ -218,20 +221,38 @@ function pingAPI(callback = (status) => { }) {
 };
 var loadprogress = {
     finish: 0,
-    target: 5,
-    get schedule() { return this.finish / this.target * 100; },
-    get onFinished() { return this.finish >= this.target; }
+    target: 0,
+    lastTaskName: "",
+    allCompleted: false,
+    get onFinished() { return this.finish >= this.target; },
+    createTask(name, loading = true) {
+        this.lastTaskName = (loading ? "正在" : "") + name
+        loadingtextsmall.innerHTML = this.lastTaskName;
+        this.target++;
+        console.log("create:", loadprogress.lastTaskName, ",target =", this.target, ",finish =", this.finish);
+    },
+    finishTask() {
+        this.finish++;
+        console.log("finish:", loadprogress.lastTaskName, ",target =", this.target, ",finish =", this.finish, this.allCompleted ? ",allCompleted" : "");
+        pb.Forward(14);
+        pb.FlushElement();
+    }
 };
 var progboxlist;
+var pb = new ShrimpIF.UI.QuickElements.ProgressBar;
+var pbrenderer = ShrimpIF.UI.Rendering("#loadprogressbar", pb, true);
 exposetowindow(loadprogress, "loadprogress");
 function connectAndInit() {
+    loadprogress.finish = 0;
+    loadprogress.target = 0;
+    loadprogress.createTask("与终端建立连接");
     pingAPI((status) => {
         if (status) {
-            loadprogress.finish++;
-            loadingtextsmall.innerHTML = "正在加载ChatNio";
+            loadprogress.finishTask();
+            loadprogress.createTask("加载ChatNio");
             reloadQuota(() => {
-                loadprogress.finish++;
-                loadingtextsmall.innerHTML = "正在下载程序列表";
+                loadprogress.finishTask();
+                loadprogress.createTask("下载程序列表");
                 $.ajax({
                     url: "http://localhost:25565/getstartmenu",
                     type: "get",
@@ -240,76 +261,75 @@ function connectAndInit() {
                             let data0 = data[i];
                             proglist.appendChild(generateProgramBox(data0[0], data0[1]));
                         };
-                        loadprogress.finish++;
+                        loadprogress.finishTask();
+                        loadprogress.createTask("下载用户数据");
                         $.ajax({
                             url: "http://localhost:25565/getuser/name",
                             type: "get",
                             success(data) {
                                 usernamelabel.innerText = data;
-                                loadprogress.finish++;
-                                loadingtextsmall.innerHTML = "正在加载插件";
-                                $.ajax({
-                                    url: "http://localhost:25565/getPlugins",
-                                    type: "get",
-                                    success(data) {
-                                        try { var data = JSON.parse(data); } catch { };
-                                        loadprogress.finish += data.length;
-                                        for (let i = 0; i < data.length; i++) {
-                                            eval(data[i]);
-                                            ShrimpIF.PluginList.__onlyone__ = false;
-                                            loadprogress.finish++;
-                                        };
-                                        loadingtextsmall.innerHTML = "正在下载桌面配置";
-                                        $.ajax({
-                                            url: "http://localhost:25565/getDesktop",
-                                            type: "get",
-                                            success(data) {
-                                                for (let i = 0; i < data.length; i++) {
-                                                    let progcontainer = document.createElement("div");
-                                                    progcontainer.classList.add("progbox");
-                                                    progcontainer.addEventListener("click", () => {
-                                                        $.ajax({
-                                                            url: "http://localhost:25565/runDesktop/" + data[i],
-                                                            type: "get"
-                                                        });
+                                avatarimg["src"] = "http://localhost:25565/getuser/avatar";
+                                avatarimg.addEventListener("load", () => {
+                                    loadprogress.finishTask();
+                                    loadprogress.createTask("下载桌面配置");
+                                    $.ajax({
+                                        url: "http://localhost:25565/getDesktop",
+                                        type: "get",
+                                        success(data) {
+                                            for (let i = 0; i < data.length; i++) {
+                                                let progcontainer = document.createElement("div");
+                                                progcontainer.classList.add("progbox");
+                                                progcontainer.addEventListener("click", () => {
+                                                    $.ajax({
+                                                        url: "http://localhost:25565/runDesktop/" + data[i],
+                                                        type: "get"
                                                     });
-                                                    let progicon = document.createElement("img");
-                                                    progicon.classList.add("progicon");
-                                                    progicon.src = "http://localhost:25565/getIcon/" + data[i];
-                                                    let progtitle = document.createElement("span");
-                                                    progtitle.innerText = data[i];
-                                                    progcontainer.appendChild(progicon);
-                                                    progcontainer.appendChild(document.createElement("br"));
-                                                    progcontainer.appendChild(progtitle);
-                                                    progbar.appendChild(progcontainer);
-                                                };
-                                                progboxlist = document.querySelectorAll(".progbox");
-                                                loadingtextsmall.innerHTML = "正在下载用户数据";
-                                                avatarimg["src"] = "http://localhost:25565/getuser/avatar";
-                                                avatarimg.addEventListener("load", () => {
-                                                    loadprogress.finish++;
-                                                    loadingtextsmall.innerHTML = "最后清理";
-                                                    if (nowhour > 6 && nowhour < 12) {
-                                                        ttglabel.innerText = "早上";
-                                                    }
-                                                    else if (nowhour === 12) {
-                                                        ttglabel.innerText = "中午";
-                                                    }
-                                                    else if (nowhour > 12 && nowhour < 18) {
-                                                        ttglabel.innerText = "下午";
-                                                    }
-                                                    else {
-                                                        ttglabel.innerText = "晚上";
-                                                    };
-                                                    loadingtextsmall.style.color = "transparent";
-                                                    infobar.style.transform = "translateY(-1vw) scale(0.6)";
-                                                    loadingtext.innerText = "- 准备就绪 -";
-                                                    controlbar.style.transform = "scale(1,1)";
-                                                    controlbar.style.opacity = "1";
                                                 });
-                                            }
-                                        });
-                                    }
+                                                let progicon = document.createElement("img");
+                                                progicon.classList.add("progicon");
+                                                progicon.src = "http://localhost:25565/getIcon/" + data[i];
+                                                let progtitle = document.createElement("span");
+                                                progtitle.innerText = data[i];
+                                                progcontainer.appendChild(progicon);
+                                                progcontainer.appendChild(document.createElement("br"));
+                                                progcontainer.appendChild(progtitle);
+                                                progbar.appendChild(progcontainer);
+                                            };
+                                            progboxlist = document.querySelectorAll(".progbox");
+                                            loadprogress.finishTask();
+                                            $.ajax({
+                                                url: "http://localhost:25565/getPlugins",
+                                                type: "get",
+                                                success(data) {
+                                                    requestAnimationFrame(() => loadPluginQuery(data, () => {
+                                                        loadprogress.createTask("最后清理", false);
+                                                        if (nowhour > 6 && nowhour < 12) {
+                                                            ttglabel.innerText = "早上";
+                                                        }
+                                                        else if (nowhour === 12) {
+                                                            ttglabel.innerText = "中午";
+                                                        }
+                                                        else if (nowhour > 12 && nowhour < 18) {
+                                                            ttglabel.innerText = "下午";
+                                                        }
+                                                        else {
+                                                            ttglabel.innerText = "晚上";
+                                                        };
+                                                        loadingtextsmall.style.color = "transparent";
+                                                        infobar.style.transform = "translateY(-1vw) scale(0.6)";
+                                                        loadingtext.innerText = "- 准备就绪 -";
+                                                        controlbar.style.transform = "scale(1,1)";
+                                                        controlbar.style.opacity = "1";
+                                                        loadprogress.finishTask();
+                                                        loadprogress.allCompleted = true;
+                                                        loadprogressbar.style.animationName = "jumpclose";
+                                                    }));
+
+                                                }
+                                            });
+                                        }
+                                    });
+
                                 });
                             }
                         });
@@ -321,6 +341,20 @@ function connectAndInit() {
             connectAndInit();
         };
     });
+};
+function loadPluginQuery(query, callback) {
+    loadprogress.createTask("加载插件");
+    eval(query.pop());
+    ShrimpIF.PluginList.__onlyone__ = false;
+    loadprogress.finishTask();
+    let stocb;
+    if (query.length > 0) {
+        stocb = () => loadPluginQuery(query, callback);
+    }
+    else {
+        stocb = callback;
+    };
+    setTimeout(stocb, 100);
 };
 const ReqFrame = window.requestAnimationFrame
 window["ReqFrame"] = ReqFrame;
