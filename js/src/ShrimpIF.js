@@ -164,7 +164,7 @@ const UI = {
                 let cont = UI.CreateHtmlElement("div", ["progressbar"]);
                 cont.style.width = this.Width + "px";
                 let overlay = UI.CreateHtmlElement("div", ["overlay"]);
-                let icon = UI.CreateHtmlElement("div", ["icon"]);
+                let icon = UI.CreateHtmlElement("div", ["icon"], {}, { innerText: this.Schedule + "%" });
                 overlay.appendChild(icon);
                 cont.appendChild(overlay);
                 this.__generated__ = overlay;
