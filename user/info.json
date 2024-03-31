@@ -1,4 +1,7 @@
 {
     "avatar": "avatar.jpg",
-    "name": "FallingShrimp"
+    "name": "FallingShrimp",
+    "chatnio": {
+        "apikey": ""
+    }
 }

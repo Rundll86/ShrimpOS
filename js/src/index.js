@@ -157,15 +157,11 @@ window.addEventListener("mousemove", (e) => {
     if (mouseDown) {
         if (e.movementY < -50) {
             changing = true;
-            progbar.style.transform = "translateY(-300px) scale(1,1)";
+            progbar.style.transform = "translateY(-500px) scale(1,1)";
             progbar.style.opacity = "1";
             controlbar.style.transform = "scale(1,0)";
             controlbar.style.opacity = "0";
             infobar.style.opacity = 0;
-            progboxlist.forEach((e) => {
-                e.style.height = "175px";
-                e.style.margin = "10px";
-            });
             proglistopen = true;
         };
         if (e.movementY > 50) {
@@ -175,10 +171,6 @@ window.addEventListener("mousemove", (e) => {
             controlbar.style.transform = "scale(1,1)";
             controlbar.style.opacity = "1";
             infobar.style.opacity = 1;
-            progboxlist.forEach((e) => {
-                e.style.height = "0px";
-                e.style.margin = "0px";
-            });
             proglistopen = false;
         };
         if (proglistopen) {
@@ -322,7 +314,7 @@ function connectAndInit() {
                                                         controlbar.style.opacity = "1";
                                                         loadprogress.finishTask();
                                                         loadprogress.allCompleted = true;
-                                                        loadprogressbar.style.transform = "scale(1,0)";
+                                                        loadprogressbar.style.transform = "scale(0,0)";
                                                         loadprogressbar.style.opacity = "0";
                                                     }));
                                                 }

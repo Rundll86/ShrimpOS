@@ -42,6 +42,11 @@ def getuser(key):
         return userinfo["name"]
 
 
+@app.route("/getuserinfo")
+def getuserinfo():
+    return userinfo
+
+
 @app.route("/run/<name>")
 def runprogram(name):
     if name in programlist.keys():

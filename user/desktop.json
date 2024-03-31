@@ -33,5 +33,25 @@
         "C:/Windows/System32/cmd.exe",
         "命令提示符",
         "D:/Project/ShrimpOS/user/icon/cmd.ico"
+    ],
+    [
+        "C:/Program Files (x86)/Tencent/QQLive/QQLive.exe",
+        "腾讯视频",
+        "D:/Project/ShrimpOS/user/icon/qqlive.ico"
+    ],
+    [
+        "C:/Program Files/GoldWave/GoldWave.exe",
+        "GoldWave",
+        "D:/Project/ShrimpOS/user/icon/goldwave.ico"
+    ],
+    [
+        "C:/Program Files/obs-studio/bin/64bit/obs64.exe",
+        "OBS Studio",
+        "D:/Project/ShrimpOS/user/icon/obs.ico"
+    ],
+    [
+        "C:/Program Files/Steam++/Steam++.exe",
+        "Steam++",
+        "D:/Project/ShrimpOS/user/icon/steampp.ico"
     ]
 ]

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "buildtest": "webpack --config testconfig.js"
   },
   "author": "",
   "license": "ISC",

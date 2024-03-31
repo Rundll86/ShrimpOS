@@ -396,7 +396,6 @@ code::-webkit-scrollbar-thumb {
     overflow: scroll;
     position: fixed;
     left: 15%;
-    top: 60%;
 }
 
 #progbar::-webkit-scrollbar {
@@ -405,10 +404,9 @@ code::-webkit-scrollbar-thumb {
 
 #progbar .progbox {
     width: 150px;
-    height: 0px;
     border-radius: 5px;
     display: inline-block;
-    margin: 0px;
+    margin: 10px;
 }
 
 #progbar .progbox:hover {
@@ -511,17 +509,42 @@ code::-webkit-scrollbar-thumb {
     height: 15px;
     background-color: var(--Background-Color);
     --angle: 7px;
-    clip-path: polygon(var(--angle) 0%, calc(100% - var(--angle)) 0%, 100% 50%, calc(100% - var(--angle)) 100%, var(--angle) 100%, 0% 50%);
+    clip-path: polygon(var(--angle) 0%,
+            calc(50% - var(--iconwidth)) 0%,
+            50% calc(var(--iconwidth) * -1),
+            calc(50% + var(--iconwidth)) 0%,
+            calc(100% - var(--angle)) 0%,
+            100% 50%,
+            calc(100% - var(--angle)) 100%,
+            calc(50% + var(--iconwidth)) 100%,
+            50% calc(100% + var(--iconwidth)),
+            calc(50% - var(--iconwidth)) 100%,
+            var(--angle) 100%, 0% 50%);
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.progressbar,
+.progressbar * {
+    --iconwidth: 25px;
 }
 
 .progressbar .overlay {
     height: 10px;
     background-color: var(--LineColor);
     --angle: 7px;
-    clip-path: polygon(var(--angle) 0%, calc(100% - var(--angle)) 0%, 100% 50%, calc(100% - var(--angle)) 100%, var(--angle) 100%, 0% 50%);
+    clip-path: polygon(var(--angle) 0%,
+            calc(50% - var(--iconwidth)) 0%,
+            50% calc(var(--iconwidth) * -1),
+            calc(50% + var(--iconwidth)) 0%,
+            calc(100% - var(--angle)) 0%,
+            100% 50%,
+            calc(100% - var(--angle)) 100%,
+            calc(50% + var(--iconwidth)) 100%,
+            50% calc(100% + var(--iconwidth)),
+            calc(50% - var(--iconwidth)) 100%,
+            var(--angle) 100%, 0% 50%);
     width: 0px;
     display: flex;
     justify-content: center;
@@ -529,11 +552,43 @@ code::-webkit-scrollbar-thumb {
 }
 
 .progressbar .overlay .icon {
-    width: 10px;
-    height: 10px;
-    background-color: rgba(255, 255, 255, 30%);
+    width: var(--iconwidth);
+    height: var(--iconwidth);
+    background-color: var(--LineColor);
     --angle: 5px;
-    clip-path: polygon(var(--angle) 0%, calc(100% - var(--angle)) 0%, 100% 50%, calc(100% - var(--angle)) 100%, var(--angle) 100%, 0% 50%);
+    clip-path: polygon(0% 50%,
+            50% 0%,
+            100% 50%,
+            50% 100%);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progressbar .overlay .icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: var(--iconwidth);
+    height: var(--iconwidth);
+    background-color: rgba(0, 0, 0, 30%);
+    clip-path: polygon(0% 50%,
+            50% 0%,
+            100% 50%,
+            50% 100%);
+}
+
+.progressbar .overlay .icon::before {
+    content: "";
+    width: calc(var(--iconwidth) * 0.7);
+    height: calc(var(--iconwidth) * 0.7);
+    background-color: rgba(255, 255, 255, 30%);
+    clip-path: polygon(0% 50%,
+            50% 0%,
+            100% 50%,
+            50% 100%);
 }
 
 #loadprogressbar {
