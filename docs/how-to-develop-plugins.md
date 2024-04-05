@@ -1,7 +1,7 @@
 初始化项目且安装声明文件  
 ```batch
 npm init -y
-npm install shrimp-if --save-dev
+npm install shrimp-if
 ```
 <u>**_ShrimpPlugin不需要经由webpack编译，安装声明文件仅作为辅助开发。_**</u>  
 <u>**_导入声明文件必须使用 `require` 函数导入而非 `import from`！_**</u>  
