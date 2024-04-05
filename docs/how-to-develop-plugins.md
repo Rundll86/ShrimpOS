@@ -68,7 +68,7 @@ ShrimpIF.UI.Rendering("body",btn,true);
 使用AI需要设定ApiKey，可在ChatNio网站中获取，方法与OpenAI类似。接下来使用 `SetApiKey` 方法初始化。
 ```js
 ShrimpIF.AI.SetApiKey("你的ApiKey");
-/* 要获取用户设定的ApiKey，使用ShrimpIF.UserInfo.ApiKey */
+/* 要获取用户信息提供的ApiKey，使用ShrimpIF.UserInfo.ApiKey */
 ```
 来自 `ShrimpIF.AI` 类可初始化一个GPT聊天连接，构造参数第一项为 `boolean` 类型，当传入true时将创建一个新的聊天连接，反之连接到一个已有的聊天，当参数为false时则需要传入第二个参数，为现有聊天的ID。
 ```js
