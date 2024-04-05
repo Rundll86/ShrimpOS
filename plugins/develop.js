@@ -1,4 +1,4 @@
-const ShrimpIF = require("../js/src/ShrimpIF.js");
+const ShrimpIF = require("../js/src/shrimpIF.js");
 var panel = new ShrimpIF.UI.QuickElements.PanelBox;
 var progressbar = new ShrimpIF.UI.QuickElements.ProgressBar;
 var btn = new ShrimpIF.UI.QuickElements.ButtonBox;
@@ -18,3 +18,4 @@ panel.Append(progressbar);
 panel.Append(btn);
 panel.Append(btn2);
 var renderer = ShrimpIF.UI.Rendering("#controlbar", panel);
+//ShrimpIF.UI.Style.LoadFile(ShrimpIF.Toolbox.GetFilePath("a.css"));

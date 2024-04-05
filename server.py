@@ -79,10 +79,10 @@ def getplugins():
     for root, _, files in os.walk("plugins"):
         for j in files:
             if os.path.splitext(j)[1].upper() == ".JS":
-                res.append(os.path.join(root, j))
+                res.append(os.path.abspath(os.path.join(root, j)).replace("\\", "/"))
     ans = []
     for i in res:
-        ans.append(getfile(i).read())
+        ans.append([getfile(i).read(), os.path.dirname(i)])
     return ans
 
 

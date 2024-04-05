@@ -14,7 +14,7 @@ const progbar = document.getElementById("progbar");
 const loadingtextsmall = document.getElementById("loadingtext-small");
 const loadprogressbar = document.getElementById("loadprogressbar");
 var lastaskend = true;
-const ShrimpIF = require("./ShrimpIF.js");
+const ShrimpIF = require("./shrimpIF.js");
 const MarkdownIt = require("markdown-it");
 const hljs = require("highlight.js");
 const $ = require("jquery");
@@ -336,7 +336,10 @@ function connectAndInit() {
 };
 function loadPluginQuery(query, callback) {
     loadprogress.createTask("加载插件");
-    eval(query.pop());
+    let plu = query.pop()
+    console.log(plu);
+    ShrimpIF.PluginList.__currentFile__ = plu[1];
+    eval(plu[0]);
     ShrimpIF.PluginList.__onlyone__ = false;
     loadprogress.finishTask();
     let stocb;

@@ -527,7 +527,7 @@ code::-webkit-scrollbar-thumb {
 
 .progressbar,
 .progressbar * {
-    --iconwidth: 25px;
+    --iconwidth: 30px;
 }
 
 .progressbar .overlay {

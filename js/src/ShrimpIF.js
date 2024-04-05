@@ -157,6 +157,7 @@ const UI = {
             Schedule = 0;
             Width = 200;
             __generated__ = null;
+            __generatedIcon__ = null;
             Forward(Step = 1) {
                 this.Schedule += Step;
             };
@@ -164,7 +165,7 @@ const UI = {
                 let cont = UI.CreateHtmlElement("div", ["progressbar"]);
                 cont.style.width = this.Width + "px";
                 let overlay = UI.CreateHtmlElement("div", ["overlay"]);
-                let icon = UI.CreateHtmlElement("div", ["icon"], {}, { innerText: this.Schedule + "%" });
+                let icon = UI.CreateHtmlElement("div", ["icon"]);
                 overlay.appendChild(icon);
                 cont.appendChild(overlay);
                 this.__generated__ = overlay;
@@ -174,6 +175,12 @@ const UI = {
             FlushElement() {
                 this.__generated__.style.width = this.Width * this.Schedule * 0.01 - 5 + "px";
             };
+        }
+    },
+    Style: {
+        LoadFile(Path) {
+            let styleele = UI.CreateHtmlElement("link", [], {}, { rel: "stylesheet", href: Path });
+            document.head.appendChild(styleele);
         }
     },
     /**
@@ -249,6 +256,7 @@ const UI = {
 const PluginList = {
     __content__: {},
     __onlyone__: false,
+    __currentFile__: "",
     get __namelist__() {
         return Object.keys(this.__content__);
     },
@@ -338,6 +346,9 @@ const MsgBoxColors = {
 const Toolbox = {
     RandomInt(Min, Max) {
         return Math.floor(Math.random() * (Max - Min + 1)) + Min;
+    },
+    GetFilePath(Rel) {
+        return "file:///" + ShrimpIF.PluginList.__currentFile__ + "/" + Rel;
     }
 };
 const ShrimpIF = { AI, MsgTypes, UI, ButtonStyleTypes, PluginList, Message, MsgBoxColors, Toolbox };

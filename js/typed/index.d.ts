@@ -59,6 +59,15 @@ declare namespace UI {
             HeightCSS: string;
             Radius: number;
         }
+        class ProgressBar extends ShrimpElement {
+            Schedule: number;
+            Width: number;
+            Forward(Step: number): void;
+            FlushElement(): void;
+        }
+    }
+    namespace Style {
+        function LoadFile(Path: string): void;
     }
     class RendererContext {
         LastResult: Array<HTMLElement>;
@@ -95,5 +104,6 @@ declare enum MsgBoxColors {
 }
 declare namespace Toolbox {
     function RandomInt(Min: number, Max: number): number;
+    function GetFilePath(Rel: string): string;
 }
 export { AI, ShrimpElement, ButtonStyleTypes, MsgTypes, UI, PluginList, Message, MsgBoxColors, Toolbox };
