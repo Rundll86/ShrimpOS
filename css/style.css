@@ -139,6 +139,7 @@ button {
     border-top: transparent 2px solid;
     border-bottom: transparent 2px solid;
     border-radius: 5px;
+    position: relative;
 }
 
 button.small {
@@ -549,6 +550,7 @@ code::-webkit-scrollbar-thumb {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition-timing-function: ease-out;
 }
 
 .progressbar .overlay .icon {
