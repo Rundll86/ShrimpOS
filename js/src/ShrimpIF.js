@@ -323,16 +323,25 @@ const Message = {
         Show() {
             this.__generated__.style.animationName = "msgboxopen";
         };
+        Hide() {
+            this.__generated__.style.animationName = "jumpclose";
+        };
     },
     Show(Color, Content, Title) {
-        let res = new this.MessageBox();
-        res.Color = Color;
-        res.Append((typeof Content === "string") ? new (UI.FromHtmlElement(UI.CreateHtmlElement("span", [], {}, { innerText: Content }))) : Content);
-        res.Title = Title;
-        res.Position = [
-            Toolbox.RandomInt(100, 1000),
-            Toolbox.RandomInt(100, 700)
-        ];
+        let res;
+        if (Color instanceof this.MessageBox) {
+            res = Color;
+        }
+        else {
+            res = new this.MessageBox();
+            res.Color = Color;
+            res.Append((typeof Content === "string") ? new (UI.FromHtmlElement(UI.CreateHtmlElement("span", [], {}, { innerText: Content }))) : Content);
+            res.Title = Title;
+            res.Position = [
+                Toolbox.RandomInt(100, 1000),
+                Toolbox.RandomInt(100, 700)
+            ];
+        };
         UI.Rendering("body", res);
         return res;
     }
@@ -351,5 +360,10 @@ const Toolbox = {
         return "file:///" + ShrimpIF.PluginList.__currentFile__ + "/" + Rel;
     }
 };
-const ShrimpIF = { AI, MsgTypes, UI, ButtonStyleTypes, PluginList, Message, MsgBoxColors, Toolbox };
+const UserInfo = {
+    ApiKey: "",
+    Name: "",
+    AvatarPath: "http://localhost:25565/getuser/avatar"
+};
+const ShrimpIF = { AI, MsgTypes, UI, ButtonStyleTypes, PluginList, Message, MsgBoxColors, Toolbox, UserInfo };
 module.exports = window["ShrimpIF"] = ShrimpIF;

@@ -68,6 +68,7 @@ ShrimpIF.UI.Rendering("body",btn,true);
 使用AI需要设定ApiKey，可在ChatNio网站中获取，方法与OpenAI类似。接下来使用 `SetApiKey` 方法初始化。
 ```js
 ShrimpIF.AI.SetApiKey("你的ApiKey");
+/* 要获取用户设定的ApiKey，使用ShrimpIF.UserInfo.ApiKey */
 ```
 来自 `ShrimpIF.AI` 类可初始化一个GPT聊天连接，构造参数第一项为 `boolean` 类型，当传入true时将创建一个新的聊天连接，反之连接到一个已有的聊天，当参数为false时则需要传入第二个参数，为现有聊天的ID。
 ```js
@@ -102,4 +103,30 @@ my_chatgpt.Send("你好！",(kw,end)=>{
 async function load_quota(){
     console.log(await ShrimpIF.AI.GetQuota());
 };
+```
+### 重点消息框
+使用 `Message` 模块显示消息框，其中 `MessageBox` 类为消息框的自定义组件，直接创建实例可自定义消息框。
+```js
+let a_msgbox=new ShrimpIF.Message.MessageBox;
+a_msgbox.Color=["Light","Dark"]; //其中，Light作为明亮颜色，Dark作为较暗颜色，可从MsgBoxColors中取值
+a_msgbox.Title="标题";
+a_msgbox.Position=[]; //位置，需求2维向量
+ShrimpIF.UI.Rendering("body",a_msgbox); //把消息框附加到body进行渲染
+/* a_msgbox.Hide() 可隐藏消息框
+   a_msgbox.Show() 反之 */
+```
+每次创建消息框再渲染将会很麻烦，使用 `MessageBox.Show` 函数快速显示消息。
+```js
+ShrimpIF.Message.Show([/* 颜色 */],"文字内容 或 自定义组件","标题");
+```
+如果这条函数无法渲染需求的消息样式，也可直接将消息框组件传入第一个参数。
+```js
+ShrimpIF.Message.Show(new ShrimpIF.Message.MessageBox);
+```
+### 用户信息公开
+从 `UserInfo` 对象中可取得用户的可公开信息。
+```js
+let userName=ShrimpIF.UserInfo.Name; //用户名
+let userAvatarPath=ShrimpIF.UserInfo.AvatarPath; //用户头像地址
+let userApiKey=ShrimpIF.UserInfo.ApiKey; //用户的ChatNio-ApiKey
 ```

@@ -88,7 +88,7 @@ declare namespace PluginList {
 }
 declare namespace Message {
     class MessageBox extends ShrimpElement {
-        Color: MsgBoxColors;
+        Color: MsgBoxColors | MessageBox;
         Title: string;
         Position: [number, number];
         Show(): void;
@@ -106,4 +106,9 @@ declare namespace Toolbox {
     function RandomInt(Min: number, Max: number): number;
     function GetFilePath(Rel: string): string;
 }
-export { AI, ShrimpElement, ButtonStyleTypes, MsgTypes, UI, PluginList, Message, MsgBoxColors, Toolbox };
+declare namespace UserInfo {
+    const Name: string;
+    const ApiKey: string;
+    const AvatarPath: string;
+}
+export { AI, ShrimpElement, ButtonStyleTypes, MsgTypes, UI, PluginList, Message, MsgBoxColors, Toolbox, UserInfo };

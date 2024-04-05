@@ -21,7 +21,6 @@ const $ = require("jquery");
 require("highlight.js/styles/vs2015.css");
 require("jquery-easing");
 window["MDIt"] = MarkdownIt;
-ShrimpIF.AI.SetApiKey("sk-2a5326672dca3070cc132303d90fd7e67597969e5b61a6c27b6fffe1bf93f3a7");
 var shrimpAI = new ShrimpIF.AI(true);
 function exposetowindow(obj, name) {
     window[name] = obj;
@@ -241,27 +240,30 @@ function connectAndInit() {
     pingAPI((status) => {
         if (status) {
             loadprogress.finishTask();
-            loadprogress.createTask("加载ChatNio");
-            reloadQuota(() => {
-                loadprogress.finishTask();
-                loadprogress.createTask("下载程序列表");
-                $.ajax({
-                    url: "http://localhost:25565/getstartmenu",
-                    type: "get",
-                    success(data) {
-                        for (let i = 0; i < data.length; i++) {
-                            let data0 = data[i];
-                            proglist.appendChild(generateProgramBox(data0[0], data0[1]));
-                        };
-                        loadprogress.finishTask();
-                        loadprogress.createTask("下载用户数据");
-                        $.ajax({
-                            url: "http://localhost:25565/getuser/name",
-                            type: "get",
-                            success(data) {
-                                usernamelabel.innerText = data;
-                                avatarimg["src"] = "http://localhost:25565/getuser/avatar";
-                                avatarimg.addEventListener("load", () => {
+            loadprogress.createTask("下载程序列表");
+            $.ajax({
+                url: "http://localhost:25565/getstartmenu",
+                type: "get",
+                success(data) {
+                    for (let i = 0; i < data.length; i++) {
+                        let data0 = data[i];
+                        proglist.appendChild(generateProgramBox(data0[0], data0[1]));
+                    };
+                    loadprogress.finishTask();
+                    loadprogress.createTask("下载用户数据");
+                    $.ajax({
+                        url: "http://localhost:25565/getuserinfo",
+                        type: "get",
+                        success(data) {
+                            ShrimpIF.UserInfo.ApiKey = data.chatnio.apikey;
+                            ShrimpIF.UserInfo.Name = data.name;
+                            usernamelabel.innerText = ShrimpIF.UserInfo.Name;
+                            avatarimg["src"] = ShrimpIF.UserInfo.AvatarPath;
+                            avatarimg.addEventListener("load", () => {
+                                loadprogress.finishTask();
+                                loadprogress.createTask("初始化ShrimpAI");
+                                ShrimpIF.AI.SetApiKey(ShrimpIF.UserInfo.ApiKey);
+                                reloadQuota(() => {
                                     loadprogress.finishTask();
                                     loadprogress.createTask("下载桌面配置");
                                     $.ajax({
@@ -321,12 +323,26 @@ function connectAndInit() {
                                             });
                                         }
                                     });
-
+                                }, () => {
+                                    let msgbox = new ShrimpIF.Message.MessageBox;
+                                    msgbox.Color = ShrimpIF.MsgBoxColors.FatalError;
+                                    msgbox.Position = [
+                                        ShrimpIF.Toolbox.RandomInt(100, 1000),
+                                        ShrimpIF.Toolbox.RandomInt(100, 700)
+                                    ];
+                                    let tip = new ShrimpIF.UI.QuickElements.Label;
+                                    tip.Text = "ShrimpAI初始化失败！";
+                                    let reloadbtn = new ShrimpIF.UI.QuickElements.ButtonBox;
+                                    reloadbtn.Text = "重载";
+                                    reloadbtn.AfterClick = () => { window.location.reload(); };
+                                    msgbox.Append(tip);
+                                    msgbox.Append(reloadbtn);
+                                    ShrimpIF.Message.Show(msgbox);
                                 });
-                            }
-                        });
-                    }
-                });
+                            });
+                        }
+                    });
+                }
             });
         }
         else {
@@ -336,8 +352,7 @@ function connectAndInit() {
 };
 function loadPluginQuery(query, callback) {
     loadprogress.createTask("加载插件");
-    let plu = query.pop()
-    console.log(plu);
+    let plu = query.pop();
     ShrimpIF.PluginList.__currentFile__ = plu[1];
     eval(plu[0]);
     ShrimpIF.PluginList.__onlyone__ = false;
