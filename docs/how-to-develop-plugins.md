@@ -5,7 +5,7 @@ npm install shrimp-if --save-dev
 ```
 <u>**_ShrimpPlugin不需要经由webpack编译，安装声明文件仅作为辅助开发。_**</u>  
 <u>**_导入声明文件必须使用 `require` 函数导入而非 `import from`！_**</u>  
-<u>**_ShrimpIF加载插件时对 `require` 函数做了特殊处理，如果脚本中需要导入非 `ShrimpIF` 的其他模块，请使用webpack编译bundle！_**</u>
+<u>**_ShrimpIF加载插件时对 `require` 函数做了特殊处理，如果脚本中需要导入非 `ShrimpIF` 的其他模块，请使用Webpack编译单文件Bundle！_**</u>
 
 ### 注册到插件列表
 ```js
@@ -129,4 +129,31 @@ ShrimpIF.Message.Show(new ShrimpIF.Message.MessageBox);
 let userName=ShrimpIF.UserInfo.Name; //用户名
 let userAvatarPath=ShrimpIF.UserInfo.AvatarPath; //用户头像地址
 let userApiKey=ShrimpIF.UserInfo.ApiKey; //用户的ChatNio-ApiKey
+```
+### 使用其他模块
+<u>**_此处不是指可以直接调用Node模块！这不可能实现。_**</u>  
+在插件工作目录初始化NPM并安装Webpack。
+```batch
+npm init -y
+npm install shrimp-if webpack webpack-cli
+```
+创建Webpack配置文件并设置你需要的配置，此处不再赘述。  
+使用NPM安装其他模块，最后使用Webpack编译！
+```batch
+npm install jquery
+```
+记得将编译脚本写入NPM Script。
+```json
+{
+    ...
+    "scripts": {
+        "build": "webpack"
+    },
+    ...
+}
+
+```
+此时，必须将源代码文件的后缀名改为.cjs或.ejs而不是.js，终端会自动判断可执行的js代码。
+```batch
+npm run build
 ```
