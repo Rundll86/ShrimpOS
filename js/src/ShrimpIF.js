@@ -3,6 +3,13 @@ class AI {
     MessageType = MsgTypes.TEXT;
     UseWeb = true;
     AnswerEnd = true;
+    set ConverID(Value) {
+        this.__chatnio__.close();
+        this.__chatnio__ = new chatnio.Chat(Value);
+    };
+    get ConverID() {
+        return this.__chatnio__.id;
+    }
     get ModelName() {
         let NameMap = [
             "gpt-3.5-turbo-1106",
@@ -12,14 +19,18 @@ class AI {
         if (!Object.keys(NameMap).includes(this.MessageType)) { return this.MessageType; };
         return NameMap[this.MessageType];
     };
+    /**
+     * @type {chatnio.Chat}
+     */
     __chatnio__ = new chatnio.Chat(-1);
     constructor(CreateNew = false, ConverID = 1) {
         if (CreateNew) {
-            this.__chatnio__ = new chatnio.Chat(-1);
+            this.ConverID = -1;
         }
         else {
-            this.__chatnio__ = new chatnio.Chat(ConverID);
+            this.ConverID = ConverID
         };
+        this.__chatnio__ = new chatnio.Chat(this.ConverID);
     };
     Send(Msg, Callback = (Msg, End) => { }) {
         this.__chatnio__.askStream({ message: Msg, model: this.ModelName, web: this.UseWeb }, (Msg) => { Callback(Msg.message, Msg.end); this.AnswerEnd = Msg.end; });

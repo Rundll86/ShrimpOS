@@ -1,6 +1,6 @@
 {
   "name": "shrimp-if",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "The type declaration of ShrimpIF.",
   "main": "index.js",
   "scripts": {
