@@ -351,20 +351,26 @@ function connectAndInit() {
     });
 };
 function loadPluginQuery(query, callback) {
-    loadprogress.createTask("加载插件");
-    let plu = query.pop();
-    ShrimpIF.PluginList.__currentFile__ = plu[1];
-    eval(plu[0]);
-    ShrimpIF.PluginList.__onlyone__ = false;
-    loadprogress.finishTask();
-    let stocb;
-    if (query.length > 0) {
-        stocb = () => loadPluginQuery(query, callback);
+    try {
+        debugger
+        loadprogress.createTask("加载插件");
+        let plu = query.pop();
+        ShrimpIF.PluginList.__currentFile__ = plu[1];
+        eval(plu[0]);
+        ShrimpIF.PluginList.__onlyone__ = false;
+        loadprogress.finishTask();
+        let stocb;
+        if (query.length > 0) {
+            stocb = () => loadPluginQuery(query, callback);
+        }
+        else {
+            stocb = callback;
+        };
+        setTimeout(stocb, 100);
     }
-    else {
-        stocb = callback;
+    catch (e) {
+        ShrimpIF.Message.Show(ShrimpIF.MsgBoxColors.Error, e.stack, "加载插件出错");
     };
-    setTimeout(stocb, 100);
 };
 const ReqFrame = window.requestAnimationFrame
 window["ReqFrame"] = ReqFrame;

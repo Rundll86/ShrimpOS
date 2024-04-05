@@ -1,0 +1,16 @@
+{
+  "name": "plugins",
+  "version": "1.0.0",
+  "description": "",
+  "main": "develop.cjs",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "shrimp-if": "^1.0.13",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
