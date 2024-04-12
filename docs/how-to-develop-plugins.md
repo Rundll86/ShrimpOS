@@ -157,3 +157,38 @@ npm install jquery
 ```batch
 npm run build
 ```
+### 导出可公开使用的数据
+#### 注册
+使用 `PublicDB` 模块可自定义导出数据供其他插件使用。
+```js
+ShrimpIF.PublicDB.Register("a-data", "hello world");
+ShrimpIF.PublicDB.Register("hello", () => {
+    console.log("hello world!");
+});
+```
+注册公开数据前需先注册插件，否则将拒绝注册。反之请使用 `Expose` 函数直接释放到全局对象。
+```js
+ShrimpIF.PluginList.Register("my-plugin");
+ShrimpIF.PublicDB.Register("a-data", "hello world");
+ShrimpIF.PublicDB.Register("hello", () => {
+    console.log("hello world!");
+});
+
+//或者
+
+ShrimpIF.PublicDB.Expose("hello", () => {
+    console.log("hello world!");
+});
+```
+#### 导入
+使用 `PublicDB.Load` 从另一插件中加载公开数据，将会返回一个对象。
+```js
+var MyPlugin=ShrimpIF.PublicDB.Load("my-plugin");
+/* 从ID名为my-plugin的插件中获取 */
+console.log(MyPlugin["a-data"]); //取得my-plugin中导出的名为a-data的数据
+MyPlugin.hello(); //取得my-plugin中导出的名为hello的函数
+
+//如果该插件使用Expose导出而非Register，可直接从全局对象取用。
+
+hello();
+```

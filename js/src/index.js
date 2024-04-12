@@ -38,13 +38,14 @@ function shutdown() {
 function restart() {
     sendCmd("shutdown -r -t 0");
 };
-async function reloadQuota(callback, error = () => { }) {
+async function reloadQuota(callback = () => { }, error = () => { }) {
     try {
         quotanum.innerText = (await ShrimpIF.AI.GetQuota()).toFixed(2);
         callback();
     }
     catch {
         callback();
+        error();
     };
 };
 function reloadHighlight() {
