@@ -268,6 +268,7 @@ const PluginList = {
     __content__: {},
     __onlyone__: false,
     __currentFile__: "",
+    __last__: "",
     get __namelist__() {
         return Object.keys(this.__content__);
     },
@@ -289,6 +290,7 @@ const PluginList = {
                 new Error("Only one plugin can be registered for a file.")
             );
         };
+        this.__last__ = ID;
         this.__onlyone__ = true;
         if (Object.keys(this.__content__).includes(ID)) { this.Remove(ID); };
         this.__content__[ID] = [Name, Version, Author, Description];
@@ -310,6 +312,9 @@ const Message = {
     MessageBox: class extends ShrimpElement {
         Color = MsgBoxColors.Info;
         Title = "Message";
+        /**
+         * @type {HTMLDivElement}
+         */
         __generated__ = null;
         Position = [100, 100];
         Update() {
@@ -336,6 +341,10 @@ const Message = {
         };
         Hide() {
             this.__generated__.style.animationName = "jumpclose";
+            this.__generated__.addEventListener("animationend", () => {
+                this.__generated__.remove();
+                this.__generated__ = null;
+            });
         };
     },
     Show(Color, Content, Title) {
@@ -376,5 +385,17 @@ const UserInfo = {
     Name: "",
     AvatarPath: "http://localhost:25565/getuser/avatar"
 };
-const ShrimpIF = { AI, MsgTypes, UI, ButtonStyleTypes, PluginList, Message, MsgBoxColors, Toolbox, UserInfo };
+const PublicDB = {
+    __content__: {},
+    Register(Name, Data) {
+        this.__content__[PluginList.__last__][Name] = Data;
+    },
+    Load(Name) {
+        return this.__content__[PluginList.__last__][Name];
+    },
+    Expose(Name, Data) {
+        window[Name] = Data;
+    }
+};
+const ShrimpIF = { AI, MsgTypes, UI, ButtonStyleTypes, PluginList, Message, MsgBoxColors, Toolbox, UserInfo, PublicDB };
 module.exports = window["ShrimpIF"] = ShrimpIF;

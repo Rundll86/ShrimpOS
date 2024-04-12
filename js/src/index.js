@@ -44,7 +44,7 @@ async function reloadQuota(callback, error = () => { }) {
         callback();
     }
     catch {
-        error();
+        callback();
     };
 };
 function reloadHighlight() {
@@ -352,7 +352,6 @@ function connectAndInit() {
 };
 function loadPluginQuery(query, callback) {
     try {
-        debugger
         loadprogress.createTask("加载插件");
         let plu = query.pop();
         ShrimpIF.PluginList.__currentFile__ = plu[1];

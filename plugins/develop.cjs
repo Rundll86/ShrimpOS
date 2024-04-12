@@ -1,4 +1,5 @@
 const ShrimpIF = require("shrimp-if");
+ShrimpIF.PluginList.Register("my-plugin");
 console.log(ShrimpIF);
 var panel = new ShrimpIF.UI.QuickElements.PanelBox;
 var progressbar = new ShrimpIF.UI.QuickElements.ProgressBar;
