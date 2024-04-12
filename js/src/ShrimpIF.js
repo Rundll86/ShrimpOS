@@ -388,10 +388,13 @@ const UserInfo = {
 const PublicDB = {
     __content__: {},
     Register(Name, Data) {
+        if (!this.__content__[PluginList.__last__]) {
+            this.__content__[PluginList.__last__] = {};
+        };
         this.__content__[PluginList.__last__][Name] = Data;
     },
     Load(Name) {
-        return this.__content__[PluginList.__last__][Name];
+        return this.__content__[Name];
     },
     Expose(Name, Data) {
         window[Name] = Data;
