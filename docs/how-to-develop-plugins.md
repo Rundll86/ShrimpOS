@@ -60,7 +60,7 @@ var btn=new ShrimpIF.UI.QuickElements.ButtonBox;
 btn.Text="Button";
 ShrimpIF.UI.Rendering("body",btn,true);
 ```
-此 `Rendering` 函数成功将组件渲染到DOM中后将返回一个工具对象，其包括 `Elements` 数组与 `Reload` 函数，`Elements` 数组中包含了此次渲染所生成成功的HTML元素对象，然而，当修改了组件对象的属性时，更改并不会自动同步到DOM中，此时调用 `Reload` 函数即可手动将更改同步到DOM中。
+此 `Rendering` 函数成功将组件渲染到DOM中后将返回一个工具对象，其包括 `LastResult` 数组与 `Reload` 函数，`LastResult` 数组中包含了此次渲染所生成成功的HTML元素对象，然而，当修改了组件对象的属性时，更改并不会自动同步到DOM中，此时调用 `Reload` 函数即可手动将更改同步到DOM中。
 ### 使用ShrimpAI
 此AI模型使用了[ChatNio](https://chatnio.net)网站所提供的API，在此郑重感谢。  
 由于网站运营费用问题，调用API需要消耗点数，请前往网站自行购买点数，价格是便宜的。网站由国人纯自研，这样优秀的项目是值得支持的！

@@ -326,7 +326,7 @@ function connectAndInit() {
                                     });
                                 }, () => {
                                     let msgbox = new ShrimpIF.Message.MessageBox;
-                                    msgbox.Color = ShrimpIF.MsgBoxColors.FatalError;
+                                    msgbox.Color = ShrimpIF.MsgBoxColors.Error;
                                     msgbox.Position = [
                                         ShrimpIF.Toolbox.RandomInt(100, 1000),
                                         ShrimpIF.Toolbox.RandomInt(100, 700)
@@ -334,9 +334,14 @@ function connectAndInit() {
                                     let tip = new ShrimpIF.UI.QuickElements.Label;
                                     tip.Text = "ShrimpAI初始化失败！";
                                     let reloadbtn = new ShrimpIF.UI.QuickElements.ButtonBox;
+                                    let btnstyles=ShrimpIF.ButtonStyleTypes;
+                                    reloadbtn.StyleList=[
+                                        btnstyles.HoverWithoutFlushBar
+                                    ];
                                     reloadbtn.Text = "重载";
                                     reloadbtn.AfterClick = () => { window.location.reload(); };
                                     msgbox.Append(tip);
+                                    msgbox.Append(new ShrimpIF.UI.QuickElements.NewLine);
                                     msgbox.Append(reloadbtn);
                                     ShrimpIF.Message.Show(msgbox);
                                 });

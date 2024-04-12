@@ -320,7 +320,7 @@ const Message = {
         Update() {
             let res = UI.CreateHtmlElement("div", ["msgbox-p"], {
                 backgroundColor: this.Color[1],
-                boxShadow: `0px 0px 15px ${this.Color[0]}`
+                boxShadow: `0px 0px 10px ${this.Color[0]}`
             });
             res.style.setProperty("--px", this.Position[0] + "px");
             res.style.setProperty("--py", this.Position[1] + "px");
