@@ -77,9 +77,16 @@ export declare namespace UI {
         Remove(): void;
         constructor(RenderingTarget: ShrimpElement, Selector: string, LastResult?: Array<HTMLElement>);
     }
+    type ElementTreeContext = {
+        Target: HTMLElement,
+        Class(Classes: Array<string>): ElementTreeContext,
+        Style(Name: string, Value: string): ElementTreeContext,
+        Attribute(Name: string, Value: string): ElementTreeContext
+    };
     function CreateHtmlElement(Name: string, ClassList?: Array<string>, Style?: Object, CustomAttrs?: Object): HTMLElement;
     function Rendering(Query: string, Target: ShrimpElement, Bind?: boolean): RendererContext;
     function FromHtmlElement(Name: string): ShrimpElement;
+    function ElementTree(TagName: string, Childs: Array<ElementTreeContext>): ElementTreeContext;
 }
 export declare namespace PluginList {
     function Register(ID: string, RequirePlugin?: Array<string>, Name?: string, Version?: string, Author?: string, Description?: string): void;

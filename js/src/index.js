@@ -22,6 +22,7 @@ require("highlight.js/styles/vs2015.css");
 require("jquery-easing");
 window["MDIt"] = MarkdownIt;
 var shrimpAI = new ShrimpIF.AI(true);
+shrimpAI.MessageType = ShrimpIF.MsgTypes.PICTURE;
 function exposetowindow(obj, name) {
     window[name] = obj;
 };
@@ -334,8 +335,8 @@ function connectAndInit() {
                                     let tip = new ShrimpIF.UI.QuickElements.Label;
                                     tip.Text = "ShrimpAI初始化失败！";
                                     let reloadbtn = new ShrimpIF.UI.QuickElements.ButtonBox;
-                                    let btnstyles=ShrimpIF.ButtonStyleTypes;
-                                    reloadbtn.StyleList=[
+                                    let btnstyles = ShrimpIF.ButtonStyleTypes;
+                                    reloadbtn.StyleList = [
                                         btnstyles.HoverWithoutFlushBar
                                     ];
                                     reloadbtn.Text = "重载";

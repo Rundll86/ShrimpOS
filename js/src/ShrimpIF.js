@@ -262,6 +262,29 @@ const UI = {
             };
         };
         return CustomElement;
+    },
+    ElementTree(Tag, Childs = []) {
+        let res = document.createElement(Tag)
+        for (let i = 0; i < Childs.length; i++) {
+            res.appendChild(Childs[i].Target);
+        };
+        return {
+            Target: res,
+            Class(...Classes) {
+                for (let i = 0; i < Classes.length; i++) {
+                    this.Target.classList.add(Classes[i]);
+                };
+                return this;
+            },
+            Style(Name, Value = null) {
+                this.Target.style[Name] = Value;
+                return this;
+            },
+            Attribute(Name, Value = null) {
+                this.Target[Name] = Value;
+                return this;
+            }
+        };
     }
 };
 const PluginList = {
