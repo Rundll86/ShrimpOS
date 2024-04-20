@@ -4,7 +4,8 @@
 cd js
 npm install
 npm run build
-python3 server.py
+pip3 install -r requirements.txt
+python3 server.pyw
 ```
 WallpaperEngine -> 从本地加载壁纸  
 将插件文件放入plugins文件夹即可加载自定义插件。
