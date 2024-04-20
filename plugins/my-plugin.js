@@ -53,6 +53,7 @@ my_chatgpt.MessageType = ShrimpIF.MsgTypes.PICTURE;
 var lastans = "";
 var my_img = new ShrimpIF.UI.QuickElements.PictureBox;
 my_btn.AfterClick = () => {
+    test(1)
     my_label3.ColorCSS = "white";
     my_chatgpt.Send(`画一个来自游戏《${my_sb.Options[my_sb.Current]}》的角色“${my_sb2.Options[my_sb2.Current]}”的美图`, (msg, end) => {
         console.log(msg);
@@ -100,4 +101,3 @@ function test(num) {
         };
     }, 0);
 };
-window.test = test;

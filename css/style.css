@@ -50,7 +50,6 @@ span {
 #logo {
     font-size: 5vw;
     font-weight: bold;
-    animation: jump var(--anitime) ease-in-out;
 }
 
 #loadingtext {

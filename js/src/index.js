@@ -22,7 +22,6 @@ require("highlight.js/styles/vs2015.css");
 require("jquery-easing");
 window["MDIt"] = MarkdownIt;
 var shrimpAI = new ShrimpIF.AI(true);
-shrimpAI.MessageType = ShrimpIF.MsgTypes.PICTURE;
 function exposetowindow(obj, name) {
     window[name] = obj;
 };
