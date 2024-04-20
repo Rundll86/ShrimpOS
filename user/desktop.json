@@ -2,56 +2,56 @@
     [
         "C:/Program Files (x86)/Steam/steam.exe",
         "Steam",
-        "D:/Project/ShrimpOS/user/icon/steam.ico"
+        "user/icon/steam.ico"
     ],
     [
         "D:/Genshin Impact/launcher.exe",
         "原神",
-        "D:/Project/ShrimpOS/user/icon/yuanshen.ico"
+        "user/icon/yuanshen.ico"
     ],
     [
         "D:/Star Rail/launcher.exe",
         "崩坏：星穹铁道",
-        "D:/Project/ShrimpOS/user/icon/starrail.ico"
+        "user/icon/starrail.ico"
     ],
     [
         "C:/Program Files/Microsoft Office/root/Office16/EXCEL.EXE",
         "Excel",
-        "D:/Project/ShrimpOS/user/icon/excel.ico"
+        "user/icon/excel.ico"
     ],
     [
         "C:/Program Files/Microsoft Office/root/Office16/POWERPNT.EXE",
         "PowerPoint",
-        "D:/Project/ShrimpOS/user/icon/ppt.ico"
+        "user/icon/ppt.ico"
     ],
     [
         "C:/Program Files/Microsoft Office/root/Office16/WINWORD.EXE",
         "Word",
-        "D:/Project/ShrimpOS/user/icon/word.ico"
+        "user/icon/word.ico"
     ],
     [
         "C:/Windows/System32/cmd.exe",
         "命令提示符",
-        "D:/Project/ShrimpOS/user/icon/cmd.ico"
+        "user/icon/cmd.ico"
     ],
     [
         "C:/Program Files (x86)/Tencent/QQLive/QQLive.exe",
         "腾讯视频",
-        "D:/Project/ShrimpOS/user/icon/qqlive.ico"
+        "user/icon/qqlive.ico"
     ],
     [
         "C:/Program Files/GoldWave/GoldWave.exe",
         "GoldWave",
-        "D:/Project/ShrimpOS/user/icon/goldwave.ico"
+        "user/icon/goldwave.ico"
     ],
     [
         "C:/Program Files/obs-studio/bin/64bit/obs64.exe",
         "OBS Studio",
-        "D:/Project/ShrimpOS/user/icon/obs.ico"
+        "user/icon/obs.ico"
     ],
     [
         "C:/Program Files/Steam++/Steam++.exe",
         "Steam++",
-        "D:/Project/ShrimpOS/user/icon/steampp.ico"
+        "user/icon/steampp.ico"
     ]
 ]
